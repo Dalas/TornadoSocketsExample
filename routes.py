@@ -7,5 +7,6 @@ routes = [
     ("/login", LoginHandler, {"template": "Login.html"}),
     ("/registration", RegistrationHandler, {"template": "Registration.html"}),
     ("/some", SomeHandler, {"template": "Registration.html"}),
+    ("/ws/connection", ConnectionHandler),
     ("/static/(.*)", StaticFileHandler)
 ]
