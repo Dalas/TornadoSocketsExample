@@ -19,6 +19,6 @@ class LoginHandler(BaseHandler):
         if user['password'] != hashlib.sha1(self.get_argument('password').encode('utf-8')).hexdigest():
             return self.render(self.template, error='Invalid email or password!')
 
-        session = yield Sessions.create(user['_id'])
+        session = yield Sessions.update_or_create(user['_id'])
         self.set_secure_cookie('token', session['token'])
         self.redirect('/some')

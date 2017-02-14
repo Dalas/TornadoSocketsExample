@@ -11,18 +11,19 @@ class Sessions:
     def insert(data):
         data['_id'] = ObjectId()
 
+
         session_id = yield db.Sessions.insert(data)
         return session_id
 
     @staticmethod
     @coroutine
-    def create(user_id):
+    def update_or_create(user_id):
         session = {
             'token': str(uuid4()),
             'user_id': user_id
         }
 
-        session['_id'] = yield Sessions.insert(session)
+        yield db.Sessions.update({'user_id': user_id}, session, upsert=True)
         return session
 
     @staticmethod
