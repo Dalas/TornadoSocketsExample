@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 178:
+/***/ 179:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8,13 +8,17 @@ webpackJsonp([1],{
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(32);
+var _react = __webpack_require__(25);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(32);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Users = __webpack_require__(81);
+
+var _Users2 = _interopRequireDefault(_Users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,7 +48,8 @@ var MainChatPageComponent = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'It\'s React!'
+                'It\'s React!',
+                _react2.default.createElement(_Users2.default, { users: ['Yura', 'Dima', 'Sergey'] })
             );
         }
     }]);
@@ -54,6 +59,42 @@ var MainChatPageComponent = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(MainChatPageComponent, null), document.getElementById('container'));
 
+/***/ }),
+
+/***/ 81:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(25);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (_ref) {
+    var users = _ref.users;
+
+    return _react2.default.createElement(
+        "ul",
+        { className: "list-group col-sm-2" },
+        users.map(function (user, index) {
+            return _react2.default.createElement(
+                "li",
+                { key: index, className: "list-group-item" },
+                user
+            );
+        })
+    );
+}; /**
+    * Created by yura on 15.02.17.
+    */
+
 /***/ })
 
-},[178]);
+},[179]);

@@ -4,6 +4,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import UsersList from '../components/chat/Users';
 
 
 class MainChatPageComponent extends React.Component {
@@ -15,7 +16,9 @@ class MainChatPageComponent extends React.Component {
 
     render() {
         return (
-            <div>It's React!</div>
+            <div>It's React!
+                <UsersList users={['Yura', 'Dima', 'Sergey']} />
+            </div>
         )
     }
 }
