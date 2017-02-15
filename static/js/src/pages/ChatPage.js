@@ -3,10 +3,21 @@
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 
-export default () => {
-    return (
-        <div>asd</div>
-    )
-};
+class MainChatPageComponent extends React.Component {
+    state = {};
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>It's React!</div>
+        )
+    }
+}
+
+ReactDOM.render(<MainChatPageComponent />, document.getElementById('container'));

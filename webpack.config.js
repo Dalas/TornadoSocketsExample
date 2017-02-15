@@ -11,7 +11,8 @@ module.exports = {
     context: path.join(__dirname, "static/"),
     entry: {
         styles_loader: "./js/src/pages/styles.loader.js",
-        chatPage: "./js/src/pages/ChatPage.js"
+        chatPage: "./js/src/pages/ChatPage.js",
+        vendor: ['react', 'react-dom']
     },
     output: {
         path: path.join(__dirname, "static/js/build"),
@@ -24,7 +25,7 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'stage-0', 'react']
                 }
             },
             {
@@ -33,15 +34,10 @@ module.exports = {
             }
         ]
     },
-    externals: {
-        'react': 'React',
-        'react-dom': 'ReactDOM'
-    },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
-            name: "commons",
-            filename: "commons.js",
-            minChunks: 2
+            name: 'vendor',
+            minChunks: Infinity
         }),
         new ExtractTextPlugin({filename: "../../style/styles.css", allChunks: true})
     ],
