@@ -1,6 +1,6 @@
 
 
-class WebSocketsStore():
+class WebSocketsPool:
 
     def __init__(self):
         self.connections = {}
