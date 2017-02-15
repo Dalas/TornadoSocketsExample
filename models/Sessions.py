@@ -10,8 +10,6 @@ class Sessions:
     @coroutine
     def insert(data):
         data['_id'] = ObjectId()
-
-
         session_id = yield db.Sessions.insert(data)
         return session_id
 

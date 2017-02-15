@@ -28,7 +28,7 @@ class Users:
 
     @staticmethod
     @coroutine
-    def find_by_session(token):
+    def find_by_session_token(token):
         session = yield Sessions.find_by_token(token)
 
         if not session:

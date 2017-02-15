@@ -11,9 +11,9 @@ def is_authenticated(method):
         if not token:
             return self.redirect('/login')
 
-        self.user = yield Users.find_by_session(token.decode('utf-8'))
+        self.current_user = yield Users.find_by_session_token(token.decode('utf-8'))
 
-        if not self.user:
+        if not self.current_user:
             return self.redirect('/login')
 
         return method(self, *args, **kwargs)
