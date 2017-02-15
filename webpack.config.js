@@ -2,13 +2,16 @@
  * Created by yura on 15.02.17.
  */
 
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
-    context: path.join(__dirname, "static/js/src/pages"),
+    context: path.join(__dirname, "static/"),
     entry: {
-        chatPage: "./ChatPage.js"
+        styles_loader: "./js/src/pages/styles.loader.js",
+        chatPage: "./js/src/pages/ChatPage.js"
     },
     output: {
         path: path.join(__dirname, "static/js/build"),
@@ -23,6 +26,10 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'react']
                 }
+            },
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader!sass-loader"})
             }
         ]
     },
@@ -35,6 +42,10 @@ module.exports = {
             name: "commons",
             filename: "commons.js",
             minChunks: 2
-        })
-    ]
+        }),
+        new ExtractTextPlugin({filename: "../../style/build.css", allChunks: true})
+    ],
+    resolve: {
+        extensions: ['.js', '.scss', '.css']
+    }
 };
