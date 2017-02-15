@@ -3,9 +3,9 @@ from tornado.gen import coroutine
 from controllers.decorators import is_authenticated
 
 
-class SomeHandler(BaseHandler):
+class ChatHandler(BaseHandler):
 
     @coroutine
     @is_authenticated
     def get(self):
-        print('here')
+        self.render(self.template)

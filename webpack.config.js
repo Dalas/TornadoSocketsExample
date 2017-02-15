@@ -43,7 +43,7 @@ module.exports = {
             filename: "commons.js",
             minChunks: 2
         }),
-        new ExtractTextPlugin({filename: "../../style/build.css", allChunks: true})
+        new ExtractTextPlugin({filename: "../../style/styles.css", allChunks: true})
     ],
     resolve: {
         extensions: ['.js', '.scss', '.css']

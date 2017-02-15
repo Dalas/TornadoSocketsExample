@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block content %}Tornado sockets!{% end %}</title>
+
+    <link href="/static/style/styles.css" rel="stylesheet" />
+    <script src="/static/js/build/commons.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default header">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li role="presentation"><a href="/">Home</a></li>
+                {% if not current_user %}
+                    <li role="presentation"><a href="/login">Login</a></li>
+                {% else %}
+                    <li role="presentation"><a href="/chat">Chat</a></li>
+                    <li role="presentation"><a href="/chat">You logged as {{ current_user['username'] }}</a></li>
+                {% end %}
+            </ul>
+        </div>
+    </nav>
+    {% block content %}{% end %}
+</body>
+</html>
