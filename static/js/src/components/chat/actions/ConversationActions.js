@@ -6,20 +6,20 @@ import { START_FETCHING_CONVERSATION, FINISH_FETCHING_CONVERSATION, FINISH_FETCH
 import fetch from 'isomorphic-fetch';
 
 
-export function startFetchingConversation() {
+export function startFetchingConversations() {
     return {
         type: START_FETCHING_CONVERSATION
     }
 }
 
-export function finishFetchingChat(conversations) {
+export function finishFetchingConversations(conversations) {
     return {
         type: FINISH_FETCHING_CONVERSATION,
         conversations: conversations
     }
 }
 
-export function finishFetchingConversationWithError() {
+export function finishFetchingConversationsWithError() {
     return {
         type: FINISH_FETCHING_CONVERSATION_WITH_ERROR
     }
@@ -27,20 +27,20 @@ export function finishFetchingConversationWithError() {
 
 export function fetchChats() {
     return dispatch => {
-        dispatch(startFetchingConversation());
+        dispatch(startFetchingConversations());
 
         fetch('/api/v1/conversations', {
             method: 'GET',
             credentials: 'same-origin'
         }).then( response => {
             if (response.status >= 400) {
-                dispatch(finishFetchingConversationWithError());
+                dispatch(finishFetchingConversationsWithError());
             }
             else {
                 response.json().then(conversations => {
-                    dispatch(finishFetchingChat(conversations));
+                    dispatch(finishFetchingConversations(conversations));
                 });
             }
-        }).catch( error => dispatch(finishFetchingConversationWithError()) )
+        }).catch( error => dispatch(finishFetchingConversationsWithError()) )
     }
 }

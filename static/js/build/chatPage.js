@@ -2446,6 +2446,10 @@ var START_FETCHING_USERS = exports.START_FETCHING_USERS = "START_FETCHING_USERS"
 var FINISH_FETCHING_USERS = exports.FINISH_FETCHING_USERS = "FINISH_FETCHING_USERS";
 var FINISH_FETCHING_USERS_WITH_ERROR = exports.FINISH_FETCHING_USERS_WITH_ERROR = "FINISH_FETCHING_USERS_WITH_ERROR";
 
+var START_FETCHING_CHAT = exports.START_FETCHING_CHAT = "START_FETCHING_CHAT";
+var FINISH_FETCHING_CHAT = exports.FINISH_FETCHING_CHAT = "FINISH_FETCHING_CHAT";
+var FINISH_FETCHING_CHAT_WITH_ERROR = exports.FINISH_FETCHING_CHAT_WITH_ERROR = "FINISH_FETCHING_CHAT_WITH_ERROR";
+
 var START_FETCHING_CONVERSATION = exports.START_FETCHING_CONVERSATION = "START_FETCHING_CONVERSATION";
 var FINISH_FETCHING_CONVERSATION = exports.FINISH_FETCHING_CONVERSATION = "FINISH_FETCHING_CONVERSATION";
 var FINISH_FETCHING_CONVERSATION_WITH_ERROR = exports.FINISH_FETCHING_CONVERSATION_WITH_ERROR = "FINISH_FETCHING_CONVERSATION_WITH_ERROR";
@@ -2722,9 +2726,9 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.startFetchingConversation = startFetchingConversation;
-exports.finishFetchingChat = finishFetchingChat;
-exports.finishFetchingConversationWithError = finishFetchingConversationWithError;
+exports.startFetchingConversations = startFetchingConversations;
+exports.finishFetchingConversations = finishFetchingConversations;
+exports.finishFetchingConversationsWithError = finishFetchingConversationsWithError;
 exports.fetchChats = fetchChats;
 
 var _ActionTypes = __webpack_require__(225);
@@ -2739,20 +2743,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Created by yura on 16.02.17.
  */
 
-function startFetchingConversation() {
+function startFetchingConversations() {
     return {
         type: _ActionTypes.START_FETCHING_CONVERSATION
     };
 }
 
-function finishFetchingChat(conversations) {
+function finishFetchingConversations(conversations) {
     return {
         type: _ActionTypes.FINISH_FETCHING_CONVERSATION,
         conversations: conversations
     };
 }
 
-function finishFetchingConversationWithError() {
+function finishFetchingConversationsWithError() {
     return {
         type: _ActionTypes.FINISH_FETCHING_CONVERSATION_WITH_ERROR
     };
@@ -2760,21 +2764,21 @@ function finishFetchingConversationWithError() {
 
 function fetchChats() {
     return function (dispatch) {
-        dispatch(startFetchingConversation());
+        dispatch(startFetchingConversations());
 
         (0, _isomorphicFetch2.default)('/api/v1/conversations', {
             method: 'GET',
             credentials: 'same-origin'
         }).then(function (response) {
             if (response.status >= 400) {
-                dispatch(finishFetchingConversationWithError());
+                dispatch(finishFetchingConversationsWithError());
             } else {
                 response.json().then(function (conversations) {
-                    dispatch(finishFetchingChat(conversations));
+                    dispatch(finishFetchingConversations(conversations));
                 });
             }
         }).catch(function (error) {
-            return dispatch(finishFetchingConversationWithError());
+            return dispatch(finishFetchingConversationsWithError());
         });
     };
 }
