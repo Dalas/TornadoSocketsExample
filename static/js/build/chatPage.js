@@ -153,7 +153,7 @@ var UsersComponent = function (_React$Component) {
                     return _react2.default.createElement(
                         'li',
                         { key: index, className: 'list-group-item' },
-                        user
+                        user.username
                     );
                 });
             }
@@ -2479,9 +2479,9 @@ function fetchUsers() {
     return function (dispatch) {
         dispatch(startFetchingUsers());
 
-        (0, _isomorphicFetch2.default)('/api/v1/get-users', {
+        (0, _isomorphicFetch2.default)('/api/v1/users', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            credentials: 'same-origin'
         }).then(function (response) {
             if (response.status >= 400) {
                 dispatch(finishFetchingUsersWithError());
@@ -2559,7 +2559,7 @@ exports.default = function () {
             return _extends({}, state, { fetching: true, error: '' });
 
         case _ActionTypes.FINISH_FETCHING_USERS:
-            return _extends({}, state, { fetching: false });
+            return _extends({}, state, { fetching: false, users: action.users });
 
         case _ActionTypes.FINISH_FETCHING_USERS_WITH_ERROR:
             return _extends({}, state, { fetching: false, error: 'Something went wrong!' });

@@ -29,9 +29,9 @@ export function fetchUsers() {
     return dispatch => {
         dispatch(startFetchingUsers())
 
-        fetch('/api/v1/get-users', {
+        fetch('/api/v1/users', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            credentials: 'same-origin'
         }).then( response => {
             if (response.status >= 400) {
                 dispatch(finishFetchingUsersWithError());

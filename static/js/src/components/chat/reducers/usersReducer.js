@@ -17,7 +17,7 @@ export default (state=initialState, action) => {
             return { ...state, fetching: true, error: '' };
 
         case FINISH_FETCHING_USERS:
-            return { ...state, fetching: false };
+            return { ...state, fetching: false, users: action.users };
 
         case FINISH_FETCHING_USERS_WITH_ERROR:
             return { ...state, fetching: false, error: 'Something went wrong!' };

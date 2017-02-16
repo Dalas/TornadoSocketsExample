@@ -1,10 +1,10 @@
 from models import Users
-import functools
+from tornado.gen import coroutine
 
 
 def is_authenticated(method):
 
-    @functools.wraps(method)
+    @coroutine
     def wrapper(self, *args, **kwargs):
         token = self.get_secure_cookie('token')
 
@@ -15,7 +15,6 @@ def is_authenticated(method):
 
         if not self.current_user:
             return self.redirect('/login')
-
         return method(self, *args, **kwargs)
 
     return wrapper

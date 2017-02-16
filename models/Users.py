@@ -36,3 +36,15 @@ class Users:
 
         user = yield db.Users.find_one({'_id': session['user_id']})
         return user
+
+    @staticmethod
+    @coroutine
+    def get_users(count, offset, currentUserId):
+        result = []
+        cursor = db.Users.find({'_id': {'$ne': currentUserId}})
+        while (yield cursor.fetch_next):
+            user = cursor.next_object()
+            user['_id'] = str(user['_id'])
+            result.append(user)
+
+        return result

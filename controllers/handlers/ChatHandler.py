@@ -5,7 +5,7 @@ from controllers.decorators import is_authenticated
 
 class ChatHandler(BaseHandler):
 
-    @coroutine
     @is_authenticated
+    @coroutine
     def get(self):
         self.render(self.template)
