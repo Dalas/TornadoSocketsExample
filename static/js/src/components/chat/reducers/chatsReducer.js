@@ -1,0 +1,28 @@
+/**
+ * Created by yura on 16.02.17.
+ */
+
+import { START_FETCHING_CHAT, FINISH_FETCHING_CHAT, FINISH_FETCHING_CHAT_WITH_ERROR } from '../actions/ActionTypes';
+
+
+const initialState = {
+    chats: [],
+    fetching: false,
+    error: '',
+    currentChat: ''
+};
+
+export default (state=initialState, action) => {
+    switch (action.type) {
+        case START_FETCHING_CHAT:
+            return { ...state, fetching: true, error: '' };
+
+        case FINISH_FETCHING_CHAT:
+            return { ...state, fetching: false, chats: action.chats };
+
+        case FINISH_FETCHING_CHAT_WITH_ERROR:
+            return { ...state, fetching: false, error: 'Something went wrong!' };
+
+        default: return state;
+    }
+}

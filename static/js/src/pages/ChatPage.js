@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from '../components/chat/store/store';
 import UsersList from '../components/chat/containers/Users';
+import ChatsList from '../components/chat/containers/Chats';
 
 
 class MainChatPageComponent extends React.Component {
@@ -21,6 +22,9 @@ class MainChatPageComponent extends React.Component {
             <div>It's React!
                 <Provider store={ store }>
                     <UsersList />
+                </Provider>
+                <Provider store={ store }>
+                    <ChatsList />
                 </Provider>
             </div>
         )

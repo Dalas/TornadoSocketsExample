@@ -26,6 +26,10 @@ var _Users = __webpack_require__(184);
 
 var _Users2 = _interopRequireDefault(_Users);
 
+var _Chats = __webpack_require__(230);
+
+var _Chats2 = _interopRequireDefault(_Chats);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59,6 +63,11 @@ var MainChatPageComponent = function (_React$Component) {
                     _reactRedux.Provider,
                     { store: _store2.default },
                     _react2.default.createElement(_Users2.default, null)
+                ),
+                _react2.default.createElement(
+                    _reactRedux.Provider,
+                    { store: _store2.default },
+                    _react2.default.createElement(_Chats2.default, null)
                 )
             );
         }
@@ -2428,6 +2437,12 @@ var START_FETCHING_USERS = exports.START_FETCHING_USERS = "START_FETCHING_USERS"
 var FINISH_FETCHING_USERS = exports.FINISH_FETCHING_USERS = "FINISH_FETCHING_USERS";
 var FINISH_FETCHING_USERS_WITH_ERROR = exports.FINISH_FETCHING_USERS_WITH_ERROR = "FINISH_FETCHING_USERS_WITH_ERROR";
 
+var START_FETCHING_CHAT = exports.START_FETCHING_CHAT = "START_FETCHING_CHAT";
+var FINISH_FETCHING_CHAT = exports.FINISH_FETCHING_CHAT = "FINISH_FETCHING_CHAT";
+var FINISH_FETCHING_CHAT_WITH_ERROR = exports.FINISH_FETCHING_CHAT_WITH_ERROR = "FINISH_FETCHING_CHAT_WITH_ERROR";
+var RECEIVE_MESSAGE = exports.RECEIVE_MESSAGE = "RECEIVE_MESSAGE";
+var SEND_MESSAGE = exports.SEND_MESSAGE = "SEND_MESSAGE";
+
 /***/ }),
 
 /***/ 226:
@@ -2518,13 +2533,20 @@ var _usersReducer = __webpack_require__(228);
 
 var _usersReducer2 = _interopRequireDefault(_usersReducer);
 
+var _chatsReducer = __webpack_require__(229);
+
+var _chatsReducer2 = _interopRequireDefault(_chatsReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Created by yura on 16.02.17.
+ */
+
 exports.default = (0, _redux.createStore)((0, _redux.combineReducers)({
-    usersState: _usersReducer2.default
-}), (0, _redux.applyMiddleware)(_reduxThunk2.default)); /**
-                                                         * Created by yura on 16.02.17.
-                                                         */
+    usersState: _usersReducer2.default,
+    chatsState: _chatsReducer2.default
+}), (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 /***/ }),
 
@@ -2568,6 +2590,229 @@ exports.default = function () {
             return state;
     }
 };
+
+/***/ }),
+
+/***/ 229:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * Created by yura on 16.02.17.
+                                                                                                                                                                                                                                                                   */
+
+var _ActionTypes = __webpack_require__(225);
+
+var initialState = {
+    chats: [],
+    fetching: false,
+    error: '',
+    currentChat: ''
+};
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _ActionTypes.START_FETCHING_CHAT:
+            return _extends({}, state, { fetching: true, error: '' });
+
+        case _ActionTypes.FINISH_FETCHING_CHAT:
+            return _extends({}, state, { fetching: false, chats: action.chats });
+
+        case _ActionTypes.FINISH_FETCHING_CHAT_WITH_ERROR:
+            return _extends({}, state, { fetching: false, error: 'Something went wrong!' });
+
+        default:
+            return state;
+    }
+};
+
+/***/ }),
+
+/***/ 230:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * Created by yura on 16.02.17.
+                                                                                                                                                                                                                                                                   */
+
+var _react = __webpack_require__(25);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(214);
+
+var _redux = __webpack_require__(219);
+
+var _ChatActions = __webpack_require__(231);
+
+var chatActions = _interopRequireWildcard(_ChatActions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return _extends({}, state);
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        actions: (0, _redux.bindActionCreators)(_extends({}, chatActions), dispatch)
+    };
+};
+
+var ChatsComponent = function (_React$Component) {
+    _inherits(ChatsComponent, _React$Component);
+
+    function ChatsComponent(props) {
+        _classCallCheck(this, ChatsComponent);
+
+        var _this = _possibleConstructorReturn(this, (ChatsComponent.__proto__ || Object.getPrototypeOf(ChatsComponent)).call(this, props));
+
+        _this.props.actions.fetchChats();
+        return _this;
+    }
+
+    _createClass(ChatsComponent, [{
+        key: 'render',
+        value: function render() {
+            var listContent = [];
+
+            if (this.props.chatsState.fetching) {
+                listContent = _react2.default.createElement(
+                    'li',
+                    { className: 'list-group-item' },
+                    'Fetching'
+                );
+            } else if (this.props.chatsState.chats.length == 0) {
+                listContent = _react2.default.createElement(
+                    'li',
+                    { className: 'list-group-item' },
+                    'Nothing to show!'
+                );
+            } else {
+                listContent = this.props.chatsState.chats.map(function (chat, index) {
+                    return _react2.default.createElement(
+                        'li',
+                        { key: index, className: 'list-group-item' },
+                        chat.title
+                    );
+                });
+            }
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'col-sm-2' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    this.props.chatsState.error
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    { className: 'list-group' },
+                    listContent
+                )
+            );
+        }
+    }]);
+
+    return ChatsComponent;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChatsComponent);
+
+/***/ }),
+
+/***/ 231:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.startFetchingChat = startFetchingChat;
+exports.finishFetchingChat = finishFetchingChat;
+exports.finishFetchingChatWithError = finishFetchingChatWithError;
+exports.fetchChats = fetchChats;
+
+var _ActionTypes = __webpack_require__(225);
+
+var _isomorphicFetch = __webpack_require__(83);
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Created by yura on 16.02.17.
+ */
+
+function startFetchingChat() {
+    return {
+        type: _ActionTypes.START_FETCHING_CHAT
+    };
+}
+
+function finishFetchingChat(chats) {
+    return {
+        type: _ActionTypes.FINISH_FETCHING_CHAT,
+        chats: chats
+    };
+}
+
+function finishFetchingChatWithError() {
+    return {
+        type: _ActionTypes.FINISH_FETCHING_CHAT_WITH_ERROR
+    };
+}
+
+function fetchChats() {
+    return function (dispatch) {
+        dispatch(startFetchingChat());
+
+        (0, _isomorphicFetch2.default)('/api/v1/chats', {
+            method: 'GET',
+            credentials: 'same-origin'
+        }).then(function (response) {
+            if (response.status >= 400) {
+                dispatch(finishFetchingChatWithError());
+            } else {
+                response.json().then(function (chats) {
+                    dispatch(finishFetchingChat(chats));
+                });
+            }
+        }).catch(function (error) {
+            return dispatch(finishFetchingChatWithError());
+        });
+    };
+}
 
 /***/ })
 

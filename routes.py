@@ -16,6 +16,7 @@ routes = [
 
     # Api
     ("/api/v1/users", UsersApi),
+    ("/api/v1/chats", ChatsApi),
 
     # websockets
     ("/ws", WebSocketsHandler)
