@@ -16,6 +16,12 @@ class Users:
 
     @staticmethod
     @coroutine
+    def get(user_id):
+        user = yield db.Users.get(ObjectId(user_id))
+        return user
+
+    @staticmethod
+    @coroutine
     def find(query):
         users = db.Users.find(query)
         return users
@@ -41,7 +47,7 @@ class Users:
     @coroutine
     def get_users(count, offset, currentUserId):
         result = []
-        cursor = db.Users.find({'_id': {'$ne': currentUserId}})
+        cursor = db.Users.find({'_id': {'$ne': currentUserId}}).limit(count)
         while (yield cursor.fetch_next):
             user = cursor.next_object()
             user['_id'] = str(user['_id'])

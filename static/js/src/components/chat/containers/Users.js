@@ -33,11 +33,14 @@ class UsersComponent extends React.Component {
         } else if ( this.props.usersState.users.length == 0 ) {
             listContent = <li className="list-group-item">Nothing to show!</li>
         } else {
-            listContent = this.props.usersState.users.map( (user, index) => <li key={ index } className="list-group-item">{ user.username }</li> )
+            listContent = this.props.usersState.users.map( (user, index) => <li key={ index } className="list-group-item flex-center">
+                <span>{ user.username }</span>
+                <button type="button" className="btn btn-default">Open Chat</button>
+            </li> )
         }
 
         return (
-            <div className="col-sm-2">
+            <div className="col-sm-3">
                 <p>{ this.props.usersState.error }</p>
                 <ul className="list-group">
                     { listContent }

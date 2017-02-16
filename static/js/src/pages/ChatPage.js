@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from '../components/chat/store/store';
 import UsersList from '../components/chat/containers/Users';
-import ChatsList from '../components/chat/containers/Chats';
+import ChatsList from '../components/chat/containers/Conversations';
 
 
 class MainChatPageComponent extends React.Component {

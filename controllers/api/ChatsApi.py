@@ -11,6 +11,20 @@ class ChatsApi(RequestHandler):
     @asynchronous
     @coroutine
     def get(self):
-        chats = yield Chats.get_all_users_chats(str(self.current_user['_id']))
+        members = [
+            str(self.current_user['_id']),
+            self.get_argument('member')
+        ]
 
-        self.write(dumps(chats))
+        chat = yield Chats.get_chat_by_members(members)
+
+        if not chat:
+            chat = yield Chats.insert({
+                'conversation': False,
+                'members': members,
+                'title': ''
+            })
+
+        chat['_id'] = str(chat['_id'])
+
+        self.write(dumps({'chat': chat, 'messages': []}))

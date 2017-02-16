@@ -26,9 +26,9 @@ var _Users = __webpack_require__(184);
 
 var _Users2 = _interopRequireDefault(_Users);
 
-var _Chats = __webpack_require__(230);
+var _Conversations = __webpack_require__(232);
 
-var _Chats2 = _interopRequireDefault(_Chats);
+var _Conversations2 = _interopRequireDefault(_Conversations);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -67,7 +67,7 @@ var MainChatPageComponent = function (_React$Component) {
                 _react2.default.createElement(
                     _reactRedux.Provider,
                     { store: _store2.default },
-                    _react2.default.createElement(_Chats2.default, null)
+                    _react2.default.createElement(_Conversations2.default, null)
                 )
             );
         }
@@ -161,15 +161,24 @@ var UsersComponent = function (_React$Component) {
                 listContent = this.props.usersState.users.map(function (user, index) {
                     return _react2.default.createElement(
                         'li',
-                        { key: index, className: 'list-group-item' },
-                        user.username
+                        { key: index, className: 'list-group-item flex-center' },
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            user.username
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-default' },
+                            'Open Chat'
+                        )
                     );
                 });
             }
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-2' },
+                { className: 'col-sm-3' },
                 _react2.default.createElement(
                     'p',
                     null,
@@ -2437,9 +2446,9 @@ var START_FETCHING_USERS = exports.START_FETCHING_USERS = "START_FETCHING_USERS"
 var FINISH_FETCHING_USERS = exports.FINISH_FETCHING_USERS = "FINISH_FETCHING_USERS";
 var FINISH_FETCHING_USERS_WITH_ERROR = exports.FINISH_FETCHING_USERS_WITH_ERROR = "FINISH_FETCHING_USERS_WITH_ERROR";
 
-var START_FETCHING_CHAT = exports.START_FETCHING_CHAT = "START_FETCHING_CHAT";
-var FINISH_FETCHING_CHAT = exports.FINISH_FETCHING_CHAT = "FINISH_FETCHING_CHAT";
-var FINISH_FETCHING_CHAT_WITH_ERROR = exports.FINISH_FETCHING_CHAT_WITH_ERROR = "FINISH_FETCHING_CHAT_WITH_ERROR";
+var START_FETCHING_CONVERSATION = exports.START_FETCHING_CONVERSATION = "START_FETCHING_CONVERSATION";
+var FINISH_FETCHING_CONVERSATION = exports.FINISH_FETCHING_CONVERSATION = "FINISH_FETCHING_CONVERSATION";
+var FINISH_FETCHING_CONVERSATION_WITH_ERROR = exports.FINISH_FETCHING_CONVERSATION_WITH_ERROR = "FINISH_FETCHING_CONVERSATION_WITH_ERROR";
 var RECEIVE_MESSAGE = exports.RECEIVE_MESSAGE = "RECEIVE_MESSAGE";
 var SEND_MESSAGE = exports.SEND_MESSAGE = "SEND_MESSAGE";
 
@@ -2533,9 +2542,9 @@ var _usersReducer = __webpack_require__(228);
 
 var _usersReducer2 = _interopRequireDefault(_usersReducer);
 
-var _chatsReducer = __webpack_require__(229);
+var _conversationsReducer = __webpack_require__(234);
 
-var _chatsReducer2 = _interopRequireDefault(_chatsReducer);
+var _conversationsReducer2 = _interopRequireDefault(_conversationsReducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2545,7 +2554,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _redux.createStore)((0, _redux.combineReducers)({
     usersState: _usersReducer2.default,
-    chatsState: _chatsReducer2.default
+    conversationsState: _conversationsReducer2.default
 }), (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 /***/ }),
@@ -2593,51 +2602,7 @@ exports.default = function () {
 
 /***/ }),
 
-/***/ 229:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
-                                                                                                                                                                                                                                                                   * Created by yura on 16.02.17.
-                                                                                                                                                                                                                                                                   */
-
-var _ActionTypes = __webpack_require__(225);
-
-var initialState = {
-    chats: [],
-    fetching: false,
-    error: '',
-    currentChat: ''
-};
-
-exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    switch (action.type) {
-        case _ActionTypes.START_FETCHING_CHAT:
-            return _extends({}, state, { fetching: true, error: '' });
-
-        case _ActionTypes.FINISH_FETCHING_CHAT:
-            return _extends({}, state, { fetching: false, chats: action.chats });
-
-        case _ActionTypes.FINISH_FETCHING_CHAT_WITH_ERROR:
-            return _extends({}, state, { fetching: false, error: 'Something went wrong!' });
-
-        default:
-            return state;
-    }
-};
-
-/***/ }),
-
-/***/ 230:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2661,9 +2626,9 @@ var _reactRedux = __webpack_require__(214);
 
 var _redux = __webpack_require__(219);
 
-var _ChatActions = __webpack_require__(231);
+var _ConversationActions = __webpack_require__(233);
 
-var chatActions = _interopRequireWildcard(_ChatActions);
+var conversationActions = _interopRequireWildcard(_ConversationActions);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -2681,45 +2646,45 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        actions: (0, _redux.bindActionCreators)(_extends({}, chatActions), dispatch)
+        actions: (0, _redux.bindActionCreators)(_extends({}, conversationActions), dispatch)
     };
 };
 
-var ChatsComponent = function (_React$Component) {
-    _inherits(ChatsComponent, _React$Component);
+var ConversationsComponent = function (_React$Component) {
+    _inherits(ConversationsComponent, _React$Component);
 
-    function ChatsComponent(props) {
-        _classCallCheck(this, ChatsComponent);
+    function ConversationsComponent(props) {
+        _classCallCheck(this, ConversationsComponent);
 
-        var _this = _possibleConstructorReturn(this, (ChatsComponent.__proto__ || Object.getPrototypeOf(ChatsComponent)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ConversationsComponent.__proto__ || Object.getPrototypeOf(ConversationsComponent)).call(this, props));
 
         _this.props.actions.fetchChats();
         return _this;
     }
 
-    _createClass(ChatsComponent, [{
+    _createClass(ConversationsComponent, [{
         key: 'render',
         value: function render() {
             var listContent = [];
 
-            if (this.props.chatsState.fetching) {
+            if (this.props.conversationsState.fetching) {
                 listContent = _react2.default.createElement(
                     'li',
                     { className: 'list-group-item' },
                     'Fetching'
                 );
-            } else if (this.props.chatsState.chats.length == 0) {
+            } else if (this.props.conversationsState.conversations.length == 0) {
                 listContent = _react2.default.createElement(
                     'li',
                     { className: 'list-group-item' },
                     'Nothing to show!'
                 );
             } else {
-                listContent = this.props.chatsState.chats.map(function (chat, index) {
+                listContent = this.props.conversationsState.conversations.map(function (conversation, index) {
                     return _react2.default.createElement(
                         'li',
                         { key: index, className: 'list-group-item' },
-                        chat.title
+                        conversation.title
                     );
                 });
             }
@@ -2730,7 +2695,7 @@ var ChatsComponent = function (_React$Component) {
                 _react2.default.createElement(
                     'p',
                     null,
-                    this.props.chatsState.error
+                    this.props.conversationsState.error
                 ),
                 _react2.default.createElement(
                     'ul',
@@ -2741,14 +2706,14 @@ var ChatsComponent = function (_React$Component) {
         }
     }]);
 
-    return ChatsComponent;
+    return ConversationsComponent;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChatsComponent);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ConversationsComponent);
 
 /***/ }),
 
-/***/ 231:
+/***/ 233:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2757,9 +2722,9 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.startFetchingChat = startFetchingChat;
+exports.startFetchingConversation = startFetchingConversation;
 exports.finishFetchingChat = finishFetchingChat;
-exports.finishFetchingChatWithError = finishFetchingChatWithError;
+exports.finishFetchingConversationWithError = finishFetchingConversationWithError;
 exports.fetchChats = fetchChats;
 
 var _ActionTypes = __webpack_require__(225);
@@ -2774,45 +2739,89 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Created by yura on 16.02.17.
  */
 
-function startFetchingChat() {
+function startFetchingConversation() {
     return {
-        type: _ActionTypes.START_FETCHING_CHAT
+        type: _ActionTypes.START_FETCHING_CONVERSATION
     };
 }
 
-function finishFetchingChat(chats) {
+function finishFetchingChat(conversations) {
     return {
-        type: _ActionTypes.FINISH_FETCHING_CHAT,
-        chats: chats
+        type: _ActionTypes.FINISH_FETCHING_CONVERSATION,
+        conversations: conversations
     };
 }
 
-function finishFetchingChatWithError() {
+function finishFetchingConversationWithError() {
     return {
-        type: _ActionTypes.FINISH_FETCHING_CHAT_WITH_ERROR
+        type: _ActionTypes.FINISH_FETCHING_CONVERSATION_WITH_ERROR
     };
 }
 
 function fetchChats() {
     return function (dispatch) {
-        dispatch(startFetchingChat());
+        dispatch(startFetchingConversation());
 
-        (0, _isomorphicFetch2.default)('/api/v1/chats', {
+        (0, _isomorphicFetch2.default)('/api/v1/conversations', {
             method: 'GET',
             credentials: 'same-origin'
         }).then(function (response) {
             if (response.status >= 400) {
-                dispatch(finishFetchingChatWithError());
+                dispatch(finishFetchingConversationWithError());
             } else {
-                response.json().then(function (chats) {
-                    dispatch(finishFetchingChat(chats));
+                response.json().then(function (conversations) {
+                    dispatch(finishFetchingChat(conversations));
                 });
             }
         }).catch(function (error) {
-            return dispatch(finishFetchingChatWithError());
+            return dispatch(finishFetchingConversationWithError());
         });
     };
 }
+
+/***/ }),
+
+/***/ 234:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * Created by yura on 16.02.17.
+                                                                                                                                                                                                                                                                   */
+
+var _ActionTypes = __webpack_require__(225);
+
+var initialState = {
+    conversations: [],
+    fetching: false,
+    error: '',
+    currentChat: ''
+};
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _ActionTypes.START_FETCHING_CONVERSATION:
+            return _extends({}, state, { fetching: true, error: '' });
+
+        case _ActionTypes.FINISH_FETCHING_CONVERSATION:
+            return _extends({}, state, { fetching: false, conversations: action.conversations });
+
+        case _ActionTypes.FINISH_FETCHING_CONVERSATION_WITH_ERROR:
+            return _extends({}, state, { fetching: false, error: 'Something went wrong!' });
+
+        default:
+            return state;
+    }
+};
 
 /***/ })
 

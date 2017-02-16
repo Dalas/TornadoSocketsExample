@@ -9,26 +9,36 @@ class Chats:
     @coroutine
     def insert(data):
         data['_id'] = ObjectId()
-        chat_id = db.Chats.insert(data)
+        yield db.Chats.insert(data)
 
-        return chat_id
+        return data
 
     @staticmethod
     @coroutine
-    def get_chat(chat_id):
+    def get_chat_by_id(chat_id):
         chat = yield db.Chats.get(chat_id)
 
         return chat
 
     @staticmethod
     @coroutine
-    def get_all_users_chats(user_id):
+    def get_chat_by_members(members):
+        chat = yield db.Chats.find({'conversation': False, 'members': {'$all': members}})
+
+        return chat
+
+    @staticmethod
+    @coroutine
+    def get_all_users_conversations(user_id):
         result = []
         cursor = db.Chats.find(
-            {"$or": [
-                {'owner': user_id, },
-                {'members': {'$elemMatch': {'$eq': user_id}}}
-            ]}
+            {
+                'conversation': True,
+                '$or': [
+                    {'owner': user_id, },
+                    {'members': {'$elemMatch': {'$eq': user_id}}}
+                ]
+            }
         )
 
         while (yield cursor.fetch_next):

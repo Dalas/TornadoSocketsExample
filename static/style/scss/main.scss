@@ -5,6 +5,12 @@ ul {
   margin-top: 0;
 }
 
+.flex-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header {
   min-height: auto;
   padding: 10px;

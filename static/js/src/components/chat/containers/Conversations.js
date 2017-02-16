@@ -5,7 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as chatActions from '../actions/ChatActions'
+import * as conversationActions from '../actions/ConversationActions'
 
 
 const mapStateToProps = state => {
@@ -14,11 +14,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({ ...chatActions }, dispatch)
+        actions: bindActionCreators({ ...conversationActions }, dispatch)
     }
 };
 
-class ChatsComponent extends React.Component {
+class ConversationsComponent extends React.Component {
     constructor( props ) {
         super( props );
 
@@ -28,17 +28,17 @@ class ChatsComponent extends React.Component {
     render() {
         let listContent = [];
 
-        if ( this.props.chatsState.fetching ) {
+        if ( this.props.conversationsState.fetching ) {
             listContent = <li className="list-group-item">Fetching</li>
-        } else if ( this.props.chatsState.chats.length == 0 ) {
+        } else if ( this.props.conversationsState.conversations.length == 0 ) {
             listContent = <li className="list-group-item">Nothing to show!</li>
         } else {
-            listContent = this.props.chatsState.chats.map( (chat, index) => <li key={ index } className="list-group-item">{ chat.title }</li> )
+            listContent = this.props.conversationsState.conversations.map( (conversation, index) => <li key={ index } className="list-group-item">{ conversation.title }</li> )
         }
 
         return (
             <div className="col-sm-2">
-                <p>{ this.props.chatsState.error }</p>
+                <p>{ this.props.conversationsState.error }</p>
                 <ul className="list-group">
                     { listContent }
                 </ul>
@@ -50,4 +50,4 @@ class ChatsComponent extends React.Component {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)( ChatsComponent )
+)( ConversationsComponent )
