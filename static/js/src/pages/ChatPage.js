@@ -4,7 +4,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UsersList from '../components/chat/Users';
+import { Provider } from 'react-redux';
+import store from '../components/chat/store/store';
+import UsersList from '../components/chat/containers/Users';
 
 
 class MainChatPageComponent extends React.Component {
@@ -17,7 +19,9 @@ class MainChatPageComponent extends React.Component {
     render() {
         return (
             <div>It's React!
-                <UsersList users={['Yura', 'Dima', 'Sergey']} />
+                <Provider store={ store }>
+                    <UsersList />
+                </Provider>
             </div>
         )
     }

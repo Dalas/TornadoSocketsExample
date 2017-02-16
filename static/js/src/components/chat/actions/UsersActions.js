@@ -41,6 +41,6 @@ export function fetchUsers() {
                     dispatch(finishFetchingUsers(users));
                 });
             }
-        })
+        }).catch( error => dispatch(finishFetchingUsersWithError()) )
     }
 }
