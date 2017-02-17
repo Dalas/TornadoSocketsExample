@@ -5,7 +5,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as usersActions from '../actions/UsersActions'
+import * as usersActions from '../actions/UsersActions';
+import { fetchChat } from '../actions/ChatActions';
 
 
 const mapStateToProps = state => {
@@ -14,7 +15,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({ ...usersActions }, dispatch)
+        actions: bindActionCreators({ ...usersActions, fetchChat: fetchChat }, dispatch)
     }
 };
 
@@ -35,7 +36,8 @@ class UsersComponent extends React.Component {
         } else {
             listContent = this.props.usersState.users.map( (user, index) => <li key={ index } className="list-group-item flex-center">
                 <span>{ user.username }</span>
-                <button type="button" className="btn btn-default">Open Chat</button>
+                <button type="button" className="btn btn-default"
+                        onClick={ () => { this.props.actions.fetchChat( user._id ) } }>Open Chat</button>
             </li> )
         }
 

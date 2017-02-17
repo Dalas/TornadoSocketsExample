@@ -12,9 +12,10 @@ export function startFetchingChat(member_id) {
     }
 }
 
-export function finishFetchingChat(messages) {
+export function finishFetchingChat(chat_id, messages) {
     return {
         type: FINISH_FETCHING_CHAT,
+        chat_id: chat_id,
         messages: messages
     }
 }
@@ -27,20 +28,22 @@ export function finishFetchingChatWithError() {
 
 export function fetchChat(member_id) {
     return dispatch => {
-        dispatch(startFetchingChat(member_id))
-
-        fetch('/api/v1/chat', {
-            method: 'GET',
-            credentials: 'same-origin'
+        dispatch(startFetchingChat(member_id));
+        fetch('/api/v1/chats', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({member_id: member_id})
         }).then( response => {
+            console.log(response)
             if (response.status >= 400) {
                 dispatch(finishFetchingChatWithError());
             }
             else {
-                response.json().then(conversations => {
-                    dispatch(finishFetchingChat(conversations));
+                response.json().then(data => {
+
+                    dispatch(finishFetchingChat(data.chat_id, data.messages));
                 });
             }
-        }).catch( error => dispatch(finishFetchingChatWithError()) )
+        }).catch( error => dispatch(finishFetchingChatWithError() ) )
     }
 }

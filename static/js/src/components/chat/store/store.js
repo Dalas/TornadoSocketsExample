@@ -6,12 +6,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import usersReducer from '../reducers/usersReducer';
 import conversationsReducer from '../reducers/conversationsReducer';
+import chatReducer from '../reducers/chatReducer';
 
 
 export default createStore(
     combineReducers({
         usersState: usersReducer,
-        conversationsState: conversationsReducer
+        conversationsState: conversationsReducer,
+        chatState: chatReducer
     }),
     applyMiddleware( ReduxThunk )
 );

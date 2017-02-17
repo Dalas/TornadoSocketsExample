@@ -1,19 +1,21 @@
 from tornado.web import RequestHandler, asynchronous
 from tornado.gen import coroutine
 from controllers.decorators import is_authenticated
-from models import Chats
-from json import dumps
+from models import Chats, Messages
+from json import dumps, loads
 
 
 class ChatsApi(RequestHandler):
 
+
     @is_authenticated
     @asynchronous
     @coroutine
-    def get(self):
+    def post(self):
+        body = loads(self.request.body.decode('utf-8'))
         members = [
             str(self.current_user['_id']),
-            self.get_argument('member')
+            body['member_id']
         ]
 
         chat = yield Chats.get_chat_by_members(members)
@@ -27,4 +29,6 @@ class ChatsApi(RequestHandler):
 
         chat['_id'] = str(chat['_id'])
 
-        self.write(dumps({'chat': chat, 'messages': []}))
+        messages = yield Messages.get_chat_messages(10, 1, chat['_id'])
+
+        self.write(dumps({'chat_id': chat['_id'], 'messages': messages}))

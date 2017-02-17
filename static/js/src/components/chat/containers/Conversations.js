@@ -5,7 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as conversationActions from '../actions/ConversationActions'
+import * as conversationActions from '../actions/ConversationActions';
 
 
 const mapStateToProps = state => {
@@ -22,7 +22,7 @@ class ConversationsComponent extends React.Component {
     constructor( props ) {
         super( props );
 
-        this.props.actions.fetchChats();
+        this.props.actions.fetchConversations();
     }
 
     render() {

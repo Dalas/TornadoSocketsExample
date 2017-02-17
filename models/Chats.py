@@ -23,7 +23,7 @@ class Chats:
     @staticmethod
     @coroutine
     def get_chat_by_members(members):
-        chat = yield db.Chats.find({'conversation': False, 'members': {'$all': members}})
+        chat = yield db.Chats.find_one({'conversation': False, 'members': {'$all': members}})
 
         return chat
 
