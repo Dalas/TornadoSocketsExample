@@ -1862,20 +1862,34 @@ var _class = function (_React$Component) {
     function _class(props) {
         _classCallCheck(this, _class);
 
-        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+        _this.handleMessageChange = _this.handleMessageChange.bind(_this);
+
+        _this.state = {
+            message: ''
+        };
+        return _this;
     }
 
     _createClass(_class, [{
-        key: "render",
+        key: 'handleMessageChange',
+        value: function handleMessageChange(event) {
+            this.setState({
+                message: event.target.value
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
-                { className: "new-message-container" },
-                _react2.default.createElement("textarea", { className: "form-control", cols: "25", rows: "10" }),
+                'div',
+                { className: 'new-message-container' },
+                _react2.default.createElement('textarea', { onChange: this.handleMessageChange, className: 'form-control', cols: '25', rows: '10', value: this.state.message }),
                 _react2.default.createElement(
-                    "button",
-                    { className: "btn btn-default" },
-                    "Send message"
+                    'button',
+                    { className: 'btn btn-default' },
+                    'Send message'
                 )
             );
         }
@@ -3065,7 +3079,7 @@ var ChatComponent = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-6 chat-container' },
+                { className: this.props.id ? "col-sm-6 chat-container" : "col-sm-6 chat-container hidden" },
                 _react2.default.createElement(
                     'div',
                     { className: 'panel panel-default' },

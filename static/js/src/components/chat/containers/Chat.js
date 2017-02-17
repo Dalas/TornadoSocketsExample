@@ -43,7 +43,7 @@ class ChatComponent extends React.Component {
         }
 
         return (
-            <div className="col-sm-6 chat-container">
+            <div className={ this.props.id ? "col-sm-6 chat-container" : "col-sm-6 chat-container hidden" }>
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">Panel title</h3>
