@@ -31,4 +31,7 @@ class ChatsApi(RequestHandler):
 
         messages = yield Messages.get_chat_messages(10, 1, chat['_id'])
 
-        self.write(dumps({'chat_id': chat['_id'], 'messages': messages}))
+        current_user = self.current_user
+        current_user['_id'] = str(current_user['_id'])
+
+        self.write(dumps({'chat_id': chat['_id'], 'messages': messages, 'current_user': current_user}))

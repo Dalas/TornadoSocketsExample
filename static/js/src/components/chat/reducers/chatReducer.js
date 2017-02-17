@@ -20,7 +20,7 @@ export default function(state=initialState, action) {
             return { ...state, fetching: true, error: '', is_chat: true };
 
         case FINISH_FETCHING_CHAT:
-            return { ...state, fetching: false, messages: action.messages, companion: action.chat_id };
+            return { ...state, fetching: false, messages: action.messages, companion: action.chat_id, current_user: action.current_user };
 
         case FINISH_FETCHING_CHAT_WITH_ERROR:
             return { ...state, fetching: false, messages: [], error: 'Something went wrong!', companion: '' };

@@ -2994,3 +2994,28 @@ ul {
 .header {
   min-height: auto;
   padding: 10px; }
+
+.message, .my-message {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 0.8em;
+  border-radius: 0.5em; }
+
+.my-message {
+  text-align: right;
+  background-color: #eaeaff; }
+
+.chat-container {
+  height: 100vh; }
+  .chat-container > div {
+    height: 100vh; }
+    .chat-container > div .messages-container {
+      height: 40vh;
+      overflow-y: scroll; }
+
+.new-message-container textarea {
+  width: 33vw;
+  resize: none; }
+
+.new-message-container button {
+  margin-top: 1vh; }

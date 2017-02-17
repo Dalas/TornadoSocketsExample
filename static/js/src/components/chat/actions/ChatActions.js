@@ -12,11 +12,12 @@ export function startFetchingChat(member_id) {
     }
 }
 
-export function finishFetchingChat(chat_id, messages) {
+export function finishFetchingChat(chat_id, messages, current_user) {
     return {
         type: FINISH_FETCHING_CHAT,
         chat_id: chat_id,
-        messages: messages
+        messages: messages,
+        current_user: current_user
     }
 }
 
@@ -41,7 +42,7 @@ export function fetchChat(member_id) {
             else {
                 response.json().then(data => {
 
-                    dispatch(finishFetchingChat(data.chat_id, data.messages));
+                    dispatch(finishFetchingChat(data.chat_id, data.messages, data.current_user));
                 });
             }
         }).catch( error => dispatch(finishFetchingChatWithError() ) )
