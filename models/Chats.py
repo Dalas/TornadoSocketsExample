@@ -16,7 +16,7 @@ class Chats:
     @staticmethod
     @coroutine
     def get_chat_by_id(chat_id):
-        chat = yield db.Chats.get(chat_id)
+        chat = yield db.Chats.find_one({'_id': ObjectId(chat_id)})
 
         return chat
 

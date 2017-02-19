@@ -1,22 +1,29 @@
 from tornado.websocket import WebSocketHandler
 from controllers.decorators import is_authenticated
 from tornado.gen import coroutine
+from models import Messages, Chats
+from json import loads, dumps
 
 
 class WebSocketsHandler(WebSocketHandler):
 
-    @coroutine
     @is_authenticated
+    @coroutine
     def open(self):
         self.settings['wsp'].open_connection(self.current_user['_id'], self)
 
-    @coroutine
     @is_authenticated
+    @coroutine
     def on_close(self):
         self.settings['wsp'].close_connection(self.current_user['_id'])
 
-    @coroutine
     @is_authenticated
+    @coroutine
     def on_message(self, message):
-        print("Client %s received a message : %s" % (self, message))
+        message = loads(message)
 
+        message = yield Messages.insert(message)
+        chat = yield Chats.get_chat_by_id(message['chat_id'])
+
+        self.settings['wsp'].new_message(chat['members'], message)
+        #self.write_message(message)

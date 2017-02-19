@@ -10,6 +10,7 @@ export default class extends React.Component {
         super(props);
 
         this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
 
         this.state = {
             message: ''
@@ -22,11 +23,21 @@ export default class extends React.Component {
         })
     }
 
+    sendMessage( event ) {
+        if( !this.state.message ) return;
+
+        this.props.sendMessage( this.state.message );
+        this.setState({
+            prevMessage: this.state.message,
+            message: ''
+        })
+    }
+
     render() {
         return (
             <div className="new-message-container">
                 <textarea onChange={ this.handleMessageChange } className="form-control" cols="25" rows="10" value={ this.state.message } />
-                <button className="btn btn-default">Send message</button>
+                <button onClick={ this.sendMessage } className="btn btn-default">Send message</button>
             </div>
         )
     }

@@ -15,3 +15,8 @@ class WebSocketsPool:
     def get_connection(self, user_id):
         return self.connections[user_id]
 
+    def new_message(self, members, message):
+        for member in members:
+            if member in self.connections:
+                self.connections[member].write_message(message)
+

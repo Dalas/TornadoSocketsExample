@@ -9,9 +9,11 @@ class Messages:
     @coroutine
     def insert(data):
         data['_id'] = ObjectId()
-        message_id = db.Messages.insert(data)
 
-        return message_id
+        yield db.Messages.insert(data)
+
+        data['_id'] = str(data['_id'])
+        return data
 
     @staticmethod
     @coroutine

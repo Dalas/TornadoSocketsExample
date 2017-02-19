@@ -3,7 +3,8 @@
  */
 
 import { START_FETCHING_CHAT, FINISH_FETCHING_CHAT, FINISH_FETCHING_CHAT_WITH_ERROR,
-         START_FETCHING_CONVERSATION, FINISH_FETCHING_CONVERSATION, FINISH_FETCHING_CONVERSATION_WITH_ERROR} from '../actions/ActionTypes';
+         START_FETCHING_CONVERSATION, FINISH_FETCHING_CONVERSATION, FINISH_FETCHING_CONVERSATION_WITH_ERROR,
+         SEND_MESSAGE, RECEIVE_MESSAGE} from '../actions/ActionTypes';
 
 
 const initialState = {
@@ -15,6 +16,8 @@ const initialState = {
 };
 
 export default function(state=initialState, action) {
+    let messages = [];
+
     switch (action.type) {
         case START_FETCHING_CHAT:
             return { ...state, fetching: true, error: '', is_chat: true };
@@ -33,6 +36,18 @@ export default function(state=initialState, action) {
 
         case FINISH_FETCHING_CONVERSATION_WITH_ERROR:
             return { ...state, fetching: false, messages: [], error: 'Something went wrong!', companion: '' };
+
+        case SEND_MESSAGE:
+            messages = state.messages.slice();
+            messages.push(action.message);
+
+            return { ...state, messages: messages };
+
+        case RECEIVE_MESSAGE:
+            messages = state.messages.slice();
+            messages.push(action.message);
+
+            return { ...state, messages: messages };
 
         default: return { ...state }
     }

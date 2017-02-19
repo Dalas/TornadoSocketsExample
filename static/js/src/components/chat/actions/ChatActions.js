@@ -2,8 +2,22 @@
  * Created by yura on 16.02.17.
  */
 
-import { START_FETCHING_CHAT, FINISH_FETCHING_CHAT, FINISH_FETCHING_CHAT_WITH_ERROR } from './ActionTypes';
+import { START_FETCHING_CHAT, FINISH_FETCHING_CHAT, FINISH_FETCHING_CHAT_WITH_ERROR, SEND_MESSAGE, RECEIVE_MESSAGE } from './ActionTypes';
 
+
+export function sendMessage(message) {
+    return {
+        type: SEND_MESSAGE,
+        message: message
+    }
+}
+
+export function receiveMessage(message) {
+    return {
+        type: RECEIVE_MESSAGE,
+        message: message
+    }
+}
 
 export function startFetchingChat(member_id) {
     return {
@@ -35,7 +49,6 @@ export function fetchChat(member_id) {
             credentials: 'same-origin',
             body: JSON.stringify({member_id: member_id})
         }).then( response => {
-            console.log(response)
             if (response.status >= 400) {
                 dispatch(finishFetchingChatWithError());
             }
