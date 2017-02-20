@@ -29,7 +29,7 @@ class ChatsApi(RequestHandler):
 
         chat['_id'] = str(chat['_id'])
 
-        messages = yield Messages.get_chat_messages(10, 1, chat['_id'])
+        messages = yield Messages.get_chat_messages(10, 0, chat['_id'])
 
         current_user = self.current_user
 

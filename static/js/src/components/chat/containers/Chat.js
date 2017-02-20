@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as chatActions from '../actions/ChatActions';
 import NewMessageInput from '../components/MessageInput';
+import Message from '../components/Message';
 import uuid4 from 'uuid';
 
 
@@ -59,6 +60,7 @@ class ChatComponent extends React.Component {
 
     receiveMessage( event ) {
         let message = JSON.parse( event.data );
+        console.log(message);
 
         this.props.actions.receiveMessage( message );
     }
@@ -84,7 +86,7 @@ class ChatComponent extends React.Component {
             messages = <p>Nothing to show!</p>
         } else {
             messages = this.props.messages.map( (message, index) => {
-                return <p key={ index } className={ message.author.username == this.props.current_user.username ? "my-message" : "message" }>{ message.text }</p>
+                return <Message key={ index } message={ message } current_user={ this.props.current_user } />
             })
         }
 

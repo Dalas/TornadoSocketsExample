@@ -1208,6 +1208,10 @@ var _MessageInput = __webpack_require__(105);
 
 var _MessageInput2 = _interopRequireDefault(_MessageInput);
 
+var _Message = __webpack_require__(240);
+
+var _Message2 = _interopRequireDefault(_Message);
+
 var _uuid = __webpack_require__(237);
 
 var _uuid2 = _interopRequireDefault(_uuid);
@@ -1282,6 +1286,7 @@ var ChatComponent = function (_React$Component) {
         key: 'receiveMessage',
         value: function receiveMessage(event) {
             var message = JSON.parse(event.data);
+            console.log(message);
 
             this.props.actions.receiveMessage(message);
         }
@@ -1319,11 +1324,7 @@ var ChatComponent = function (_React$Component) {
                 );
             } else {
                 messages = this.props.messages.map(function (message, index) {
-                    return _react2.default.createElement(
-                        'p',
-                        { key: index, className: message.author.username == _this2.props.current_user.username ? "my-message" : "message" },
-                        message.text
-                    );
+                    return _react2.default.createElement(_Message2.default, { key: index, message: message, current_user: _this2.props.current_user });
                 });
             }
 
@@ -1964,12 +1965,17 @@ exports.default = function () {
 
         case _ActionTypes.RECEIVE_MESSAGE:
             messages = state.messages.slice();
-            if ('temporary_id' in action.message) messages.find(function (element, index, arr) {
-                if (element.temporary_id == action.message.temporary_id) {
-                    delete element.temporary_id;
-                    delete element.status;
-                }
-            });
+            if (action.message.author._id == state.current_user._id) {
+                messages.find(function (element, index, arr) {
+                    if (element.temporary_id == action.message.temporary_id) {
+                        delete action.message.temporary_id;
+                        arr[index] = action.message;
+                    }
+                });
+            } else {
+                delete action.message.temporary_id;
+                messages.push(action.message);
+            }
 
             return _extends({}, state, { messages: messages });
 
@@ -3673,6 +3679,50 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (_ref) {
+    var message = _ref.message,
+        current_user = _ref.current_user;
+
+    return _react2.default.createElement(
+        "li",
+        { className: message.author._id == current_user._id ? "my-message" : "message" },
+        _react2.default.createElement(
+            "p",
+            null,
+            message.author.username
+        ),
+        _react2.default.createElement(
+            "p",
+            null,
+            message.text
+        ),
+        _react2.default.createElement(
+            "p",
+            null,
+            message.datetime
+        )
+    );
+}; /**
+    * Created by yura on 20.02.17.
+    */
 
 /***/ })
 ]),[232]);

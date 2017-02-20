@@ -17,10 +17,15 @@ ul {
 }
 
 .message, .my-message {
-  margin: 0;
-  padding: 0.5em;
+  margin: 1em 0;
+  padding: 0.1em;
   font-size: 0.8em;
+  list-style: none;
   border-radius: 0.5em;
+
+  &>p {
+    margin: 0.1em 0;
+  }
 }
 
 .my-message {

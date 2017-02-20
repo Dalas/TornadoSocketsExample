@@ -46,13 +46,17 @@ export default function(state=initialState, action) {
 
         case RECEIVE_MESSAGE:
             messages = state.messages.slice();
-            if( 'temporary_id' in action.message )
+            if( action.message.author._id == state.current_user._id ) {
                 messages.find( (element, index, arr) => {
                     if( element.temporary_id == action.message.temporary_id ) {
-                        delete element.temporary_id;
-                        delete element.status;
+                        delete action.message.temporary_id;
+                        arr[index] = action.message
                     }
                 });
+            } else {
+                delete action.message.temporary_id;
+                messages.push( action.message );
+            }
 
             return { ...state, messages: messages };
 
