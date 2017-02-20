@@ -10,11 +10,14 @@ export default class extends React.Component {
         super(props);
 
         this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.sendWithKeyboard = this.sendWithKeyboard.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
 
         this.state = {
             message: ''
-        }
+        };
+
+        document.addEventListener('keypress', this.sendWithKeyboard)
     }
 
     handleMessageChange( event ) {
@@ -23,7 +26,13 @@ export default class extends React.Component {
         })
     }
 
-    sendMessage( event ) {
+    sendWithKeyboard( event ) {
+        if (event.ctrlKey && event.keyCode == 10) {
+            this.sendMessage();
+        }
+    }
+
+    sendMessage( ) {
         if( !this.state.message ) return;
 
         this.props.sendMessage( this.state.message );

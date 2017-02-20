@@ -21,4 +21,4 @@ class LoginHandler(BaseHandler):
 
         session = yield Sessions.update_or_create(user['_id'])
         self.set_secure_cookie('token', session['token'])
-        self.redirect('/some')
+        self.redirect('/chat')

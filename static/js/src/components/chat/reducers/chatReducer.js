@@ -39,13 +39,20 @@ export default function(state=initialState, action) {
 
         case SEND_MESSAGE:
             messages = state.messages.slice();
+            action.message.status = 'SENDING';
             messages.push(action.message);
 
             return { ...state, messages: messages };
 
         case RECEIVE_MESSAGE:
             messages = state.messages.slice();
-            messages.push(action.message);
+            if( 'temporary_id' in action.message )
+                messages.find( (element, index, arr) => {
+                    if( element.temporary_id == action.message.temporary_id ) {
+                        delete element.temporary_id;
+                        delete element.status;
+                    }
+                });
 
             return { ...state, messages: messages };
 

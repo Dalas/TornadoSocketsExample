@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as chatActions from '../actions/ChatActions';
 import NewMessageInput from '../components/MessageInput';
+import uuid4 from 'uuid';
 
 
 const mapStateToProps = state => {
@@ -29,22 +30,27 @@ class ChatComponent extends React.Component {
     constructor( props ) {
         super(props);
 
+        this.sendMessage  = this.sendMessage.bind( this );
+        this.openConnection  = this.openConnection.bind( this );
+
+        this.openConnection();
+    }
+
+    openConnection() {
         this.socket = new WebSocket(`ws://${ location.host }/ws`);
 
         this.socket.onopen = this.handleConnectionOpen.bind( this );
         this.socket.onclose = this.handleConnectionClose.bind( this );
         this.socket.onerror = this.handleConnectionError.bind( this );
         this.socket.onmessage = this.receiveMessage.bind( this );
-
-        this.sendMessage  = this.sendMessage.bind( this );
     }
 
     handleConnectionOpen( event ) {
         console.log(event)
     }
 
-    handleConnectionClose( event ) {
-        console.log(event)
+    handleConnectionClose() {
+        this.openConnection();
     }
 
     handleConnectionError( event ) {
@@ -60,12 +66,13 @@ class ChatComponent extends React.Component {
     sendMessage( message ) {
         message = {
             text: message,
+            temporary_id: uuid4.v4(),
             chat_id: this.props.id,
             author: { ...this.props.current_user }
         };
 
         this.socket.send( JSON.stringify( message ));
-        //this.props.actions.sendMessage( message );
+        this.props.actions.sendMessage( message );
     }
 
     render() {

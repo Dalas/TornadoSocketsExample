@@ -15,8 +15,11 @@ class WebSocketsPool:
     def get_connection(self, user_id):
         return self.connections[user_id]
 
-    def new_message(self, members, message):
+    def new_message(self, members, message, author_id, temporary_id):
         for member in members:
             if member in self.connections:
+                if member == author_id:
+                    message['temporary_id'] = temporary_id
+
                 self.connections[member].write_message(message)
 

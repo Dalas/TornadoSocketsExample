@@ -22,8 +22,10 @@ class WebSocketsHandler(WebSocketHandler):
     def on_message(self, message):
         message = loads(message)
 
+        temporary_id = message['temporary_id']
+        del message['temporary_id']
+
         message = yield Messages.insert(message)
         chat = yield Chats.get_chat_by_id(message['chat_id'])
 
-        self.settings['wsp'].new_message(chat['members'], message)
-        #self.write_message(message)
+        self.settings['wsp'].new_message(chat['members'], message, self.current_user['_id'], temporary_id)
