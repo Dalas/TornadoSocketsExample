@@ -12,5 +12,5 @@ class UsersApi(RequestHandler):
     @asynchronous
     @coroutine
     def get(self):
-        users = yield Users.get_users(10, 1, self.current_user['_id'])
+        users = yield Users.get_users(10, 0, self.current_user['_id'])
         self.write(dumps(users))

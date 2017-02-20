@@ -13,6 +13,7 @@ routes = [
     # handlers
     ("/", BaseHandler, {"template": "Main.html"}),
     ("/chat", ChatHandler, {"template": "Chat.html"}),
+    ("/profile/(?P<user_id>[A-Za-z0-9-]+)", ProfileHandler, {"template": "Profile.html"}),
 
     # Api
     ("/api/v1/users", UsersApi),

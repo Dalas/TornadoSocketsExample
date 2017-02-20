@@ -2986,39 +2986,65 @@ button.list-group-item-danger {
 ul {
   margin-top: 0; }
 
-.flex-center {
+body {
+  height: 100vh; }
+
+.center-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center; }
+
+/*.flex-center {
   display: flex;
   justify-content: space-between;
-  align-items: center; }
+  align-items: center;
+}
 
 .header {
   min-height: auto;
-  padding: 10px; }
+  padding: 10px;
+}
 
 .message, .my-message {
   margin: 1em 0;
   padding: 0.1em;
   font-size: 0.8em;
   list-style: none;
-  border-radius: 0.5em; }
-  .message > p, .my-message > p {
-    margin: 0.1em 0; }
+  border-radius: 0.5em;
+
+  &>p {
+    margin: 0.1em 0;
+  }
+}
 
 .my-message {
   text-align: right;
-  background-color: #eaeaff; }
+  background-color: #eaeaff;
+}
 
 .chat-container {
-  height: 80%; }
-  .chat-container > div {
-    height: 85vh; }
-    .chat-container > div .messages-container {
+  height: 80%;
+
+  & > div {
+    height: 85vh;
+
+    .messages-container {
       height: 40vh;
-      overflow-y: scroll; }
+      overflow-y: scroll;
+    }
+  }
+}
 
-.new-message-container textarea {
-  width: 33vw;
-  resize: none; }
+.new-message-container {
 
-.new-message-container button {
-  margin-top: 1vh; }
+  textarea {
+    width: 33vw;
+    resize: none;
+  }
+
+  button {
+    margin-top: 1vh;
+  }
+}*/
+.border-box {
+  box-sizing: border-box; }

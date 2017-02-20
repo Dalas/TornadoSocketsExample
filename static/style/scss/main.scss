@@ -5,7 +5,17 @@ ul {
   margin-top: 0;
 }
 
-.flex-center {
+body {
+  height: 100vh;
+}
+
+.center-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+/*.flex-center {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,4 +66,8 @@ ul {
   button {
     margin-top: 1vh;
   }
+}*/
+
+.border-box {
+  box-sizing: border-box;
 }

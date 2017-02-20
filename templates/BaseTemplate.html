@@ -4,27 +4,45 @@
     <meta charset="UTF-8">
     <title>{% block title %}Tornado sockets!{% end %}</title>
 
-    <link href="/static/style/styles.css" rel="stylesheet" />
+    <link href="/static/style/styles.css" rel="stylesheet"/>
     <script src="/static/js/build/vendor.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default header">
-        <div class="container">
-            <ul class="nav nav-pills">
-                <li role="presentation"><a href="/">Home</a></li>
-                {% if not current_user %}
-                    <li role="presentation"><a href="/login">Login</a></li>
-                {% else %}
-                    <li role="presentation"><a href="/chat">Chat</a></li>
-                    <li role="presentation"><a href="/chat">You logged as {{ current_user['username'] }}</a></li>
-                {% end %}
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        {% block content %}{% end %}
-    </div>
+<!--<nav class="navbar navbar-default navbar-fixed-top">
+        <ul class="navbar-header">
+            <li role="presentation"><a href="/">Home</a></li>
+            {% if not current_user %}
+            <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
+            <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
+            {% else %}
+            <li role="presentation"><a class="navbar-link" href="/chat">Chat</a></li>
+            <li role="presentation"><a class="navbar-link" href="/chat">You logged as {{ current_user['username'] }}</a>
+            </li>
+            {% end %}
+        </ul>
 
-    {% block bottom_scripts %}{% end %}
+
+</nav>-->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid col-sm-10 col-sm-offset-1">
+        <ul class="nav navbar-nav">
+            {% if not current_user %}
+            <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
+            <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
+            {% else %}
+            <li role="presentation"><a class="navbar-link" href="/chat">Chat</a></li>
+            <li role="presentation"><a class="navbar-link" href="/chat">You logged as {{ current_user['username'] }}</a>
+            </li>
+            {% end %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    {% block content %}{% end %}
+</div>
+
+{% block bottom_scripts %}{% end %}
 </body>
 </html>

@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as chatActions from '../actions/ChatActions';
@@ -33,6 +34,7 @@ class ChatComponent extends React.Component {
 
         this.sendMessage  = this.sendMessage.bind( this );
         this.openConnection  = this.openConnection.bind( this );
+        this.updateScroll  = this.updateScroll.bind( this );
 
         this.openConnection();
     }
@@ -77,6 +79,10 @@ class ChatComponent extends React.Component {
         this.props.actions.sendMessage( message );
     }
 
+    updateScroll() {
+
+    }
+
     render() {
         let messages = [];
 
@@ -96,7 +102,7 @@ class ChatComponent extends React.Component {
                     <div className="panel-heading">
                         <h3 className="panel-title">Panel title</h3>
                     </div>
-                    <div className="panel-body messages-container">
+                    <div ref="messages-container" className="panel-body messages-container">
                         { messages }
                     </div>
                     <div className="panel-footer">
