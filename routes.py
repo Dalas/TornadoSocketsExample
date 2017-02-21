@@ -8,6 +8,8 @@ routes = [
 
     # authentication
     ("/login", LoginHandler, {"template": "Login.html"}),
+    ("/github-oauth", GithubOAuthHandler),
+    ("/github-oauth-callback", GithubOAuthCallbackHandler),
     ("/logout", LogoutHandler),
     ("/registration", RegistrationHandler, {"template": "Registration.html"}),
 

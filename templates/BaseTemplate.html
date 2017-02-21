@@ -5,6 +5,8 @@
     <title>{% block title %}Tornado sockets!{% end %}</title>
 
     <link href="/static/style/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/style/font-awesome.min.css">
+
     <script src="/static/js/build/vendor.js"></script>
 </head>
 <body>
@@ -36,8 +38,8 @@
         <ul class="nav navbar-nav navbar-right">
             {% if current_user %}
             <li role="presentation">
-                <p class="navbar-link" href="/chat">You logged as
-                    <a href="/chat">{{ current_user['username'] }}</a>
+                <p class="navbar-link">You logged as
+                    <a href="/profile/{{ current_user['_id'] }}">{{ current_user['username'] }}</a>
                 </p>
             </li>
             <li role="presentation">

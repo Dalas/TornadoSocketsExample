@@ -40,7 +40,11 @@ class Users:
         if not session:
             return None
 
-        user = yield db.Users.find_one({'_id': session['user_id']})
+        user = yield db.Users.find_one({'_id': ObjectId(session['user_id'])})
+
+        if not user:
+            return None
+
         user['_id'] = str(user['_id'])
         return user
 
@@ -55,3 +59,19 @@ class Users:
             result.append(user)
 
         return result
+
+    @staticmethod
+    @coroutine
+    def get_or_create_github_user(data):
+        user = yield db.Users.find_one({"github.id": data['github']['id']})
+
+        if not user:
+            data['_id'] = ObjectId()
+
+            yield db.Users.insert(data)
+
+            data['_id'] = str(data['_id'])
+            return data
+
+        user['_id'] = str(user['_id'])
+        return user
