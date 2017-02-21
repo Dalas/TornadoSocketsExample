@@ -31,8 +31,17 @@
             <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
             <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
             {% else %}
-            <li role="presentation"><a class="navbar-link" href="/chat">Chat</a></li>
-            <li role="presentation"><a class="navbar-link" href="/chat">You logged as {{ current_user['username'] }}</a>
+            {% end %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if current_user %}
+            <li role="presentation">
+                <p class="navbar-link" href="/chat">You logged as
+                    <a href="/chat">{{ current_user['username'] }}</a>
+                </p>
+            </li>
+            <li role="presentation">
+                <a class="navbar-link" href="/logout">Logout</a>
             </li>
             {% end %}
         </ul>

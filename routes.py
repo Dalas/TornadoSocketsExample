@@ -8,6 +8,7 @@ routes = [
 
     # authentication
     ("/login", LoginHandler, {"template": "Login.html"}),
+    ("/logout", LogoutHandler),
     ("/registration", RegistrationHandler, {"template": "Registration.html"}),
 
     # handlers
