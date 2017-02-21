@@ -3,6 +3,7 @@
  */
 
 import { START_FETCHING_CHAT, FINISH_FETCHING_CHAT, FINISH_FETCHING_CHAT_WITH_ERROR, SEND_MESSAGE, RECEIVE_MESSAGE } from './ActionTypes';
+import fetch from 'isomorphic-fetch';
 
 
 export function sendMessage(message) {

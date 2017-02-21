@@ -29,8 +29,9 @@ class Users:
     @staticmethod
     @coroutine
     def find_one(query):
-        users = yield db.Users.find_one(query)
-        return users
+        user = yield db.Users.find_one(query)
+        user['_id'] = str(user['_id'])
+        return user
 
     @staticmethod
     @coroutine

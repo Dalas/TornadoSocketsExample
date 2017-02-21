@@ -12,6 +12,7 @@ module.exports = {
     entry: {
         styles_loader: "./js/src/pages/styles.loader.js",
         chatPage: "./js/src/pages/ChatPage.js",
+        teamsPage: "./js/src/pages/TeamsPage.js",
         vendor: ['react', 'react-dom', 'isomorphic-fetch']
     },
     output: {

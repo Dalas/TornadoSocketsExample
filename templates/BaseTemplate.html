@@ -10,41 +10,29 @@
     <script src="/static/js/build/vendor.js"></script>
 </head>
 <body>
-<!--<nav class="navbar navbar-default navbar-fixed-top">
-        <ul class="navbar-header">
-            <li role="presentation"><a href="/">Home</a></li>
-            {% if not current_user %}
-            <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
-            <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
-            {% else %}
-            <li role="presentation"><a class="navbar-link" href="/chat">Chat</a></li>
-            <li role="presentation"><a class="navbar-link" href="/chat">You logged as {{ current_user['username'] }}</a>
-            </li>
-            {% end %}
-        </ul>
-
-
-</nav>-->
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid col-sm-10 col-sm-offset-1">
         <ul class="nav navbar-nav">
             {% if not current_user %}
-            <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
-            <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
+                <li role="presentation"><a class="navbar-link" href="/login">Login</a></li>
+                <li role="presentation"><a class="navbar-link" href="/registration">Registration</a></li>
             {% else %}
             {% end %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if current_user %}
-            <li role="presentation">
-                <p class="navbar-link">You logged as
-                    <a href="/profile/{{ current_user['_id'] }}">{{ current_user['username'] }}</a>
-                </p>
-            </li>
-            <li role="presentation">
-                <a class="navbar-link" href="/logout">Logout</a>
-            </li>
+                <li role="presentation">
+                    <a class="navbar-link" href="/teams">Teams</a>
+                </li>
+                <li role="presentation">
+                    <p class="navbar-link">You logged as
+                        <a href="/profile/{{ current_user['_id'] }}">{{ current_user['username'] }}</a>
+                    </p>
+                </li>
+                <li role="presentation">
+                    <a class="navbar-link" href="/logout">Logout</a>
+                </li>
             {% end %}
         </ul>
     </div>

@@ -1,5 +1,6 @@
 
 @import "bootstrap.scss";
+@import "loader.scss";
 
 ul {
   margin-top: 0;
@@ -26,6 +27,15 @@ body {
 
 .margin-top-sm-1 {
   margin-top: 5vh;
+}
+
+.padding-top-sm-1 {
+  padding-top: 10vh;
+}
+
+.teams-list {
+  height: 50vh;
+  overflow-y: scroll;
 }
 
 /*.flex-center {

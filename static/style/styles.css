@@ -2983,6 +2983,17 @@ button.list-group-item-danger {
   .hidden-print {
     display: none !important; } }
 
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  position: absolute;
+  overflow: hidden;
+  background-color: white; }
+
 ul {
   margin-top: 0; }
 
@@ -3003,6 +3014,13 @@ body {
 
 .margin-top-sm-1 {
   margin-top: 5vh; }
+
+.padding-top-sm-1 {
+  padding-top: 10vh; }
+
+.teams-list {
+  height: 50vh;
+  overflow-y: scroll; }
 
 /*.flex-center {
   display: flex;
