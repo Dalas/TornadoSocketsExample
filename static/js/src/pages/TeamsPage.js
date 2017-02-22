@@ -5,6 +5,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TeamsComponent from '../components/teams/TeamsComponent';
+import TeamComponent from '../components/teams/TeamComponent';
+import EditableTeamComponent from '../components/teams/EditableTeamComponent';
 import Loader from '../components/loader';
 
 
@@ -13,11 +15,16 @@ class TeamsPage extends React.Component {
         super(props);
 
         this.fetchCurrentUser = this.fetchCurrentUser.bind( this );
+        this.handleCurrentTeamChange = this.handleCurrentTeamChange.bind( this );
 
         this.state = {
             fetching: false,
             current_user: {
                 _id: -1
+            },
+            current_team: {
+                _id: -1,
+                owner: -1
             }
         }
     }
@@ -44,12 +51,24 @@ class TeamsPage extends React.Component {
         }).catch( error => this.setState({fetching: false}) )
     }
 
+    handleCurrentTeamChange( team ) {
+        this.setState({
+            current_team: team
+        })
+    }
+
     render() {
         return (
             <div className="col-sm-12">
                 <Loader display={ this.state.fetching } />
                 <div className="col-sm-3">
-                    <TeamsComponent user_id={ this.state.current_user._id } />
+                    <TeamsComponent select_team={ this.handleCurrentTeamChange } user_id={ this.state.current_user._id } />
+                </div>
+                <div className="col-sm-8">
+                    { this.state.current_user._id == this.state.current_team.owner ?
+                        <EditableTeamComponent current_team={ this.state.current_team } /> :
+                        <TeamComponent current_team={ this.state.current_team } />
+                    }
                 </div>
             </div>
         )

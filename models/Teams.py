@@ -5,31 +5,37 @@ from bson import ObjectId
 
 class Teams:
 
-    @staticmethod
+    @classmethod
     @coroutine
-    def insert(data):
+    def insert(cls, data):
         data['_id'] = ObjectId()
 
         yield db.Teams.insert(data)
 
-        data['_id'] = str(data['_id'])
-        return data
+        return cls.serialize(data)
 
-    @staticmethod
+    @classmethod
     @coroutine
-    def get_users_teams(user_id):
+    def get_users_teams(cls, user_id):
         result = []
         cursor = db.Teams.find({
             '$or': [
                 {'owner': user_id, },
-                {'members': {'$elemMatch': {'$eq': user_id}}}
+                {"members._id": ObjectId(user_id)}
             ]
         })
 
         while (yield cursor.fetch_next):
             team = cursor.next_object()
-            team['_id'] = str(team['_id'])
 
-            result.append(team)
+            result.append(cls.serialize(team))
 
         return result
+
+    @staticmethod
+    def serialize(team):
+        team["_id"] = str(team["_id"])
+        for member in team['members']:
+            member["_id"] = str(member["_id"])
+
+        return team

@@ -63,6 +63,24 @@ class Users:
 
     @staticmethod
     @coroutine
+    def get_users_by_id(users_ids):
+        result = []
+        ids = []
+
+        for identifier in users_ids:
+            ids.append(ObjectId(identifier))
+
+        cursor = db.Users.find({'_id': {'$in': ids}})
+
+        while (yield cursor.fetch_next):
+            user = cursor.next_object()
+            user['_id'] = str(user['_id'])
+            result.append(user)
+
+        return result
+
+    @staticmethod
+    @coroutine
     def get_or_create_github_user(data):
         user = yield db.Users.find_one({"github.id": data['github']['id']})
 

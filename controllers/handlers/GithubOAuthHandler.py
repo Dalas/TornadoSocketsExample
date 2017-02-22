@@ -1,6 +1,6 @@
 from github import Github
 from tornado.gen import coroutine
-from .BaseHandler import BaseHandler
+from tornado.web import RequestHandler
 from credentials import GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
 from models import Users, Sessions
 from urllib.request import Request, urlopen
@@ -8,14 +8,14 @@ from urllib.parse import urlencode
 import json
 
 
-class GithubOAuthHandler(BaseHandler):
+class GithubOAuthHandler(RequestHandler):
 
     @coroutine
     def get(self):
         self.redirect("https://github.com/login/oauth/authorize?client_id=" + GITHUB_CLIENT_ID)
 
 
-class GithubOAuthCallbackHandler(BaseHandler):
+class GithubOAuthCallbackHandler(RequestHandler):
 
     @coroutine
     def get(self):

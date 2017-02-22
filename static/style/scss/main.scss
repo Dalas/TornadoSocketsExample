@@ -34,8 +34,20 @@ body {
 }
 
 .teams-list {
-  height: 50vh;
+  max-height: 50vh;
   overflow-y: scroll;
+}
+
+.create-team-button {
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+.my-label {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 0.66em;
 }
 
 /*.flex-center {

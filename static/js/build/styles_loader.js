@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -13,7 +13,7 @@ webpackJsonp([2],{
 "use strict";
 
 
-__webpack_require__(105);
+__webpack_require__(106);
 
 /***/ })
 
