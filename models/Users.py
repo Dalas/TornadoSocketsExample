@@ -23,8 +23,15 @@ class Users:
     @staticmethod
     @coroutine
     def find(query):
-        users = db.Users.find(query)
-        return users
+        result = []
+        cursor = db.Users.find(query)
+
+        while (yield cursor.fetch_next):
+            user = cursor.next_object()
+            user['_id'] = str(user['_id'])
+            result.append(user)
+
+        return result
 
     @staticmethod
     @coroutine

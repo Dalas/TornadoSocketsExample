@@ -13,7 +13,6 @@ class TeamsApi(RequestHandler):
     @coroutine
     def get(self, team_id=None):
         teams = yield Teams.get_users_teams(self.current_user['_id'])
-        print(teams)
         self.write(dumps(teams))
 
     @is_authenticated

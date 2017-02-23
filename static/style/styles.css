@@ -3225,6 +3225,9 @@ ul {
 body {
   height: 100vh; }
 
+.align-middle {
+  vertical-align: middle !important; }
+
 .center-content {
   height: 100vh;
   display: flex;

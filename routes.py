@@ -24,6 +24,7 @@ routes = [
     ("/api/v1/users", UsersApi),
     ("/api/v1/user/(?P<user_id>[A-Za-z0-9-]+)", UserApi),
     ("/api/v1/user", UserApi),
+    ("/api/v1/search-users", SearchUsersApi),
     ("/api/v1/chats", ChatsApi),
     ("/api/v1/teams", TeamsApi),
     ("/api/v1/conversations", ConversationsApi),

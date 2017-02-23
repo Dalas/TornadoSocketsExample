@@ -14,6 +14,12 @@ export default class extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            team: nextProps.current_team
+        })
+    }
+
     render() {
         let component;
 

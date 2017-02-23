@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import InviteUserComponent from './InviteUserComponent';
 
 
 export default class extends React.Component {
@@ -12,6 +13,12 @@ export default class extends React.Component {
         this.state = {
             team: props.current_team
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            team: nextProps.current_team
+        })
     }
 
     render() {
@@ -30,8 +37,8 @@ export default class extends React.Component {
                             <td>{ this.state.team._id }</td>
                         </tr>
                         <tr>
-                            <td>Title:</td>
-                            <td>{ this.state.team.title }</td>
+                            <td className="align-middle">Title:</td>
+                            <td><input id="team-title" className="form-control border-box" defaultValue={ this.state.team.title } /></td>
                         </tr>
                         <tr>
                             <td>Owner:</td>
@@ -66,6 +73,11 @@ export default class extends React.Component {
                                 <td colSpan="3">Nothing to show!</td>
                             </tr>
                         }
+                        <tr>
+                            <td colSpan="3">
+                                <InviteUserComponent />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
