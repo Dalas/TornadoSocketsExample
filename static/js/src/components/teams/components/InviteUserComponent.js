@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import { Debounce } from 'react-throttle';
 
 
@@ -12,21 +13,28 @@ export default class extends React.Component {
 
         this.handleUserInputChange = this.handleUserInputChange.bind( this );
         this.fetchAvailableUsers = this.fetchAvailableUsers.bind( this );
-        this.handleFocus = this.handleFocus.bind( this );
-        this.handleBlur = this.handleBlur.bind( this );
+        this.handleSelectUser = this.handleSelectUser.bind( this );
+        this.setInputValue = this.setInputValue.bind( this );
+        this.showUsers = this.showUsers.bind( this );
+        this.hideUsers = this.hideUsers.bind( this );
 
         this.state = {
             username: '',
             show: false,
             users: [],
             selected_user: ''
-        }
+        };
+
+        document.addEventListener("click", this.hideUsers)
     }
 
     handleUserInputChange( event ) {
         this.setState({
-            username: event.target.value
+            username: event.target.value,
+            selected_user: ''
         });
+
+        this.setInputValue( event.target.value );
 
         if( event.target.value )
             this.fetchAvailableUsers(event.target.value)
@@ -49,16 +57,31 @@ export default class extends React.Component {
         }).catch( error => console.log(error) )
     }
 
-    handleFocus() {
+    showUsers(event) {
+        event.nativeEvent.stopImmediatePropagation();
+
         this.setState({
             show: true
         })
     }
 
-    handleBlur() {
+    hideUsers() {
         this.setState({
             show: false
         })
+    }
+
+    handleSelectUser(event, user) {
+        this.setState({
+            selected_user: user._id,
+            username: user.username
+        });
+
+        this.setInputValue(user.username)
+    }
+
+    setInputValue(value) {
+        findDOMNode(this.refs.searchInput).value = value;
     }
 
     render() {
@@ -66,11 +89,11 @@ export default class extends React.Component {
             <div className="form-group row">
                 <div className="col-sm-8">
                     <Debounce time="500" handler="onChange">
-                        <input onFocus={ this.handleFocus } onBlur={ this.handleBlur } className="form-control border-box" type="text" defaultValue={ this.state.username } onChange={ this.handleUserInputChange } />
+                        <input ref="searchInput" onClick={ this.showUsers } className="form-control border-box" type="text" defaultValue={ this.state.username } onChange={ this.handleUserInputChange } />
                     </Debounce>
-                    <ul className={`list-group result-preview-list ${ this.state.show ? "" : "hidden" }`}>
+                    <ul className={`list-group users-preview-list ${ this.state.show ? "" : "hidden" }`}>
                         { this.state.users.map( (user, index) => {
-                            return <li key={ index } className="list-group-item">{ user.username }</li>
+                            return <li key={ index } onClick={ (event) => { this.handleSelectUser( event, user ) } } className="list-group-item">{ user.username }</li>
                         })}
                     </ul>
                 </div>

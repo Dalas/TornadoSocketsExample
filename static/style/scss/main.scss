@@ -54,6 +54,19 @@ body {
   font-size: 0.66em;
 }
 
+.users-preview-list {
+  position: absolute;
+
+  li {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #9b9b9b;
+    }
+  }
+}
+
+
 /*.flex-center {
   display: flex;
   justify-content: space-between;

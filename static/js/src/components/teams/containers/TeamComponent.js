@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import InviteUserComponent from './InviteUserComponent';
 
 
 export default class extends React.Component {
@@ -37,8 +36,8 @@ export default class extends React.Component {
                             <td>{ this.state.team._id }</td>
                         </tr>
                         <tr>
-                            <td className="align-middle">Title:</td>
-                            <td><input id="team-title" className="form-control border-box" defaultValue={ this.state.team.title } /></td>
+                            <td>Title:</td>
+                            <td>{ this.state.team.title }</td>
                         </tr>
                         <tr>
                             <td>Owner:</td>
@@ -56,28 +55,25 @@ export default class extends React.Component {
                         <tr>
                             <th>ID</th>
                             <th>E-mail</th>
+                            <th>Status</th>
                             <th>Username</th>
                         </tr>
                     </thead>
                     <tbody>
-                        { this.props.current_team.members ? this.props.current_team.members.map( (member, index) => {
+                        { this.state.members ? this.state.members.map( (member, index) => {
                             return (
                                 <tr key={ index }>
                                     <td>{ member._id }</td>
                                     <td>{ member.email }</td>
+                                    <td>{ member.status }</td>
                                     <td><a target="_blank" href={`/profile/${ member._id }`}>{ member.username }</a></td>
                                 </tr>
                             )
                         }) :
                             <tr>
-                                <td colSpan="3">Nothing to show!</td>
+                                <td colSpan="4">Nothing to show!</td>
                             </tr>
                         }
-                        <tr>
-                            <td colSpan="3">
-                                <InviteUserComponent />
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

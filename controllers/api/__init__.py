@@ -4,3 +4,4 @@ from .ChatsApi import ChatsApi
 from .TeamsApi import TeamsApi
 from .ConversationsApi import ConversationsApi
 from .SearchUsersApi import SearchUsersApi
+from .InvitesApi import InvitesApi
