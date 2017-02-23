@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 103:
+/***/ 101:
 /***/ (function(module, exports) {
 
 /**
@@ -30,7 +30,7 @@ module.exports = bytesToUuid;
 
 /***/ }),
 
-/***/ 104:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// Unique ID creation requires a high quality random # generator.  In the
@@ -71,7 +71,7 @@ module.exports = rng;
 
 /***/ }),
 
-/***/ 106:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87,29 +87,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    * Created by yura on 17.02.17.
                                                                                                                                                                                                                                                                    */
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(15);
+var _reactDom = __webpack_require__(21);
 
-var _reactRedux = __webpack_require__(20);
+var _reactRedux = __webpack_require__(13);
 
-var _redux = __webpack_require__(19);
+var _redux = __webpack_require__(15);
 
-var _ChatActions = __webpack_require__(63);
+var _ChatActions = __webpack_require__(64);
 
 var chatActions = _interopRequireWildcard(_ChatActions);
 
-var _MessageInput = __webpack_require__(117);
+var _MessageInput = __webpack_require__(115);
 
 var _MessageInput2 = _interopRequireDefault(_MessageInput);
 
-var _Message = __webpack_require__(116);
+var _Message = __webpack_require__(114);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _uuid = __webpack_require__(250);
+var _uuid = __webpack_require__(246);
 
 var _uuid2 = _interopRequireDefault(_uuid);
 
@@ -266,7 +266,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ 107:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -282,15 +282,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    * Created by yura on 16.02.17.
                                                                                                                                                                                                                                                                    */
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(20);
+var _reactRedux = __webpack_require__(13);
 
-var _redux = __webpack_require__(19);
+var _redux = __webpack_require__(15);
 
-var _ConversationActions = __webpack_require__(114);
+var _ConversationActions = __webpack_require__(112);
 
 var conversationActions = _interopRequireWildcard(_ConversationActions);
 
@@ -377,7 +377,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ 108:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -393,19 +393,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    * Created by yura on 15.02.17.
                                                                                                                                                                                                                                                                    */
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(20);
+var _reactRedux = __webpack_require__(13);
 
-var _redux = __webpack_require__(19);
+var _redux = __webpack_require__(15);
 
-var _UsersActions = __webpack_require__(115);
+var _UsersActions = __webpack_require__(113);
 
 var usersActions = _interopRequireWildcard(_UsersActions);
 
-var _ChatActions = __webpack_require__(63);
+var _ChatActions = __webpack_require__(64);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -504,7 +504,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ 109:
+/***/ 107:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -514,21 +514,21 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _redux = __webpack_require__(19);
+var _redux = __webpack_require__(15);
 
-var _reduxThunk = __webpack_require__(243);
+var _reduxThunk = __webpack_require__(62);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _usersReducer = __webpack_require__(120);
+var _usersReducer = __webpack_require__(118);
 
 var _usersReducer2 = _interopRequireDefault(_usersReducer);
 
-var _conversationsReducer = __webpack_require__(119);
+var _conversationsReducer = __webpack_require__(117);
 
 var _conversationsReducer2 = _interopRequireDefault(_conversationsReducer);
 
-var _chatReducer = __webpack_require__(118);
+var _chatReducer = __webpack_require__(116);
 
 var _chatReducer2 = _interopRequireDefault(_chatReducer);
 
@@ -544,7 +544,7 @@ exports.default = (0, _redux.createStore)((0, _redux.combineReducers)({
 
 /***/ }),
 
-/***/ 114:
+/***/ 112:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -562,9 +562,9 @@ exports.finishFetchingConversation = finishFetchingConversation;
 exports.finishFetchingConversationWithError = finishFetchingConversationWithError;
 exports.fetchConversation = fetchConversation;
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
-var _isomorphicFetch = __webpack_require__(25);
+var _isomorphicFetch = __webpack_require__(20);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -662,7 +662,7 @@ function fetchConversation(conversation_id) {
 
 /***/ }),
 
-/***/ 115:
+/***/ 113:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -676,9 +676,9 @@ exports.finishFetchingUsersWithError = finishFetchingUsersWithError;
 exports.finishFetchingUsers = finishFetchingUsers;
 exports.fetchUsers = fetchUsers;
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
-var _isomorphicFetch = __webpack_require__(25);
+var _isomorphicFetch = __webpack_require__(20);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -730,7 +730,7 @@ function fetchUsers() {
 
 /***/ }),
 
-/***/ 116:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -740,7 +740,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -775,7 +775,7 @@ exports.default = function (_ref) {
 
 /***/ }),
 
-/***/ 117:
+/***/ 115:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -787,7 +787,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -869,7 +869,7 @@ exports.default = _class;
 
 /***/ }),
 
-/***/ 118:
+/***/ 116:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -936,7 +936,7 @@ exports.default = function () {
     }
 };
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
 var initialState = {
     messages: [],
@@ -948,7 +948,7 @@ var initialState = {
 
 /***/ }),
 
-/***/ 119:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -962,7 +962,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    * Created by yura on 16.02.17.
                                                                                                                                                                                                                                                                    */
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
 var initialState = {
     conversations: [],
@@ -992,7 +992,7 @@ exports.default = function () {
 
 /***/ }),
 
-/***/ 120:
+/***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1006,7 +1006,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    * Created by yura on 15.02.17.
                                                                                                                                                                                                                                                                    */
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
 var initialState = {
     users: [],
@@ -1035,7 +1035,7 @@ exports.default = function () {
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1069,41 +1069,11 @@ var SEND_MESSAGE = exports.SEND_MESSAGE = "SEND_MESSAGE";
 
 /***/ }),
 
-/***/ 243:
+/***/ 246:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-function createThunkMiddleware(extraArgument) {
-  return function (_ref) {
-    var dispatch = _ref.dispatch,
-        getState = _ref.getState;
-    return function (next) {
-      return function (action) {
-        if (typeof action === 'function') {
-          return action(dispatch, getState, extraArgument);
-        }
-
-        return next(action);
-      };
-    };
-  };
-}
-
-var thunk = createThunkMiddleware();
-thunk.withExtraArgument = createThunkMiddleware;
-
-exports['default'] = thunk;
-
-/***/ }),
-
-/***/ 250:
-/***/ (function(module, exports, __webpack_require__) {
-
-var v1 = __webpack_require__(251);
-var v4 = __webpack_require__(252);
+var v1 = __webpack_require__(247);
+var v4 = __webpack_require__(248);
 
 var uuid = v4;
 uuid.v1 = v1;
@@ -1114,14 +1084,14 @@ module.exports = uuid;
 
 /***/ }),
 
-/***/ 251:
+/***/ 247:
 /***/ (function(module, exports, __webpack_require__) {
 
 // Unique ID creation requires a high quality random # generator.  We feature
 // detect to determine the best RNG source, normalizing to a function that
 // returns 128-bits of randomness, since that's what's usually required
-var rng = __webpack_require__(104);
-var bytesToUuid = __webpack_require__(103);
+var rng = __webpack_require__(102);
+var bytesToUuid = __webpack_require__(101);
 
 // **`v1()` - Generate time-based UUID**
 //
@@ -1224,11 +1194,11 @@ module.exports = v1;
 
 /***/ }),
 
-/***/ 252:
+/***/ 248:
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(104);
-var bytesToUuid = __webpack_require__(103);
+var rng = __webpack_require__(102);
+var bytesToUuid = __webpack_require__(101);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -1260,7 +1230,7 @@ module.exports = v4;
 
 /***/ }),
 
-/***/ 254:
+/***/ 250:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1268,29 +1238,29 @@ module.exports = v4;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(15);
+var _reactDom = __webpack_require__(21);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(20);
+var _reactRedux = __webpack_require__(13);
 
-var _store = __webpack_require__(109);
+var _store = __webpack_require__(107);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Users = __webpack_require__(108);
+var _Users = __webpack_require__(106);
 
 var _Users2 = _interopRequireDefault(_Users);
 
-var _Conversations = __webpack_require__(107);
+var _Conversations = __webpack_require__(105);
 
 var _Conversations2 = _interopRequireDefault(_Conversations);
 
-var _Chat = __webpack_require__(106);
+var _Chat = __webpack_require__(104);
 
 var _Chat2 = _interopRequireDefault(_Chat);
 
@@ -1348,7 +1318,37 @@ _reactDom2.default.render(_react2.default.createElement(MainChatPageComponent, n
 
 /***/ }),
 
-/***/ 63:
+/***/ 62:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+exports['default'] = thunk;
+
+/***/ }),
+
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1364,9 +1364,9 @@ exports.finishFetchingChat = finishFetchingChat;
 exports.finishFetchingChatWithError = finishFetchingChatWithError;
 exports.fetchChat = fetchChat;
 
-var _ActionTypes = __webpack_require__(21);
+var _ActionTypes = __webpack_require__(22);
 
-var _isomorphicFetch = __webpack_require__(25);
+var _isomorphicFetch = __webpack_require__(20);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -1436,4 +1436,4 @@ function fetchChat(member_id) {
 
 /***/ })
 
-},[254]);
+},[250]);

@@ -3,28 +3,23 @@
  */
 
 import React from 'react';
-import InviteUserComponent from '../components/InviteUserComponent';
+import InviteUserComponent from './InviteUser';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as usersActions from '../actions/UsersActions';
+import * as teamActions from '../actions/TeamActions';
 
 
-export default class extends React.Component {
+class TeamComponent extends React.Component {
     constructor( props ) {
+        console.log(props);
         super( props );
-
-        this.state = {
-            team: props.current_team
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            team: nextProps.current_team
-        })
     }
 
     render() {
         let component;
 
-        if (this.state.team._id == -1) {
+        if ( this.props.team._id == -1 ) {
             component = <div>Nothing to show!</div>
         }
         else {
@@ -34,19 +29,19 @@ export default class extends React.Component {
                     <tbody>
                         <tr>
                             <td>ID:</td>
-                            <td>{ this.state.team._id }</td>
+                            <td>{ this.props.team._id }</td>
                         </tr>
                         <tr>
                             <td className="align-middle">Title:</td>
-                            <td><input id="team-title" className="form-control border-box" defaultValue={ this.state.team.title } /></td>
+                            <td><input id="team-title" className="form-control border-box" defaultValue={ this.props.team.title } /></td>
                         </tr>
                         <tr>
                             <td>Owner:</td>
-                            <td>{ this.state.team.github_url }</td>
+                            <td>{ this.props.team.github_url }</td>
                         </tr>
                         <tr>
                             <td>GitHub:</td>
-                            <td>{ this.state.team.github_url }</td>
+                            <td>{ this.props.team.github_url }</td>
                         </tr>
                     </tbody>
                 </table>
@@ -61,7 +56,7 @@ export default class extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.props.current_team.members ? this.props.current_team.members.map( (member, index) => {
+                        { this.props.team.members ? this.props.team.members.map( (member, index) => {
                             return (
                                 <tr key={ index }>
                                     <td>{ member._id }</td>
@@ -90,3 +85,26 @@ export default class extends React.Component {
         )
     }
 }
+
+/**
+* ************************************ *
+**/
+
+const mapStateToProps = state => {
+    return {
+        fetching: state.teamsState.fetching || state.usersState.fetching || state.teamState.fetching,
+        team: state.teamState.current_team,
+        current_user: state.usersState.current_user
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators({ ...usersActions, ...teamActions }, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)( TeamComponent )

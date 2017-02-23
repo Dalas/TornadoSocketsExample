@@ -3,9 +3,16 @@
  */
 
 import React from 'react';
+import Loader from '../../loader';
+import TeamsListComponent from '../components/TeamsListComponent';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as teamsActions from '../actions/TeamsActions';
+import * as usersActions from '../actions/UsersActions';
+import * as teamActions from '../actions/TeamActions';
 
 
-export default class extends React.Component {
+class TeamComponent extends React.Component {
     constructor( props ) {
         super( props );
 
@@ -84,3 +91,27 @@ export default class extends React.Component {
         )
     }
 }
+
+/**
+* ************************************ *
+**/
+
+const mapStateToProps = state => {
+    console.log(state)
+    return {
+        fetching: state.teamsState.fetching || state.usersState.fetching || state.teamState.fetching,
+        team: state.teamState.current_team,
+        current_user: state.usersState.current_user
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators({ ...usersActions, ...teamActions }, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)( TeamComponent )

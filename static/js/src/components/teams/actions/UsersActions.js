@@ -3,7 +3,7 @@
  */
 
 import {START_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
-        START_FETCHING_MEMBERS, FINISH_FETCHING_MEMBERS, FINISH_FETCHING_MEMBERS_WITH_ERROR} from './ActionTypes';
+        START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR} from './ActionTypes';
 import fetch from 'isomorphic-fetch';
 
 /*
@@ -46,5 +46,49 @@ export function fetchCurrentUser() {
                 });
             }
         }).catch( error => dispatch( finishFetchingCurrentUserWithError() ) )
+    }
+}
+
+/*
+* Available members
+* */
+
+function startSearchingMembers() {
+    return {
+        type: START_SEARCHING_MEMBERS
+    }
+}
+
+function finishSearchingMembers(members) {
+    return {
+        type: FINISH_SEARCHING_MEMBERS,
+        members: members
+    }
+}
+
+function finishSearchingMembersWithError() {
+    return {
+        type: FINISH_SEARCHING_MEMBERS_WITH_ERROR
+    }
+}
+
+export function searchMembers(search_string) {
+    return dispatch => {
+        dispatch( startSearchingMembers() );
+
+        fetch('/api/v1/search-users', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({search_string: search_string})
+        }).then( response => {
+            if (response.status >= 400) {
+                throw true;
+            }
+            else {
+                response.json().then(data => {
+                    finishSearchingMembers(data)
+                });
+            }
+        }).catch( error => dispatch( finishSearchingMembersWithError() ))
     }
 }

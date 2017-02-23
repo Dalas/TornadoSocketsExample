@@ -8,7 +8,7 @@ import {SELECT_TEAM, FINISH_FETCHING_TEAMS, START_TEAM_CREATION, FINISH_TEAM_CRE
 const initialState = {
     teams: [],
     index: -1,
-    current_team: {},
+    current_team: {_id: -1},
     fetching: false,
     error: ''
 };

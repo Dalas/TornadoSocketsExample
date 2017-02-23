@@ -5,14 +5,16 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { Debounce } from 'react-throttle';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as usersActions from '../actions/UsersActions';
 
 
-export default class extends React.Component {
+class InviteMembersComponent extends React.Component {
     constructor(props) {
         super( props );
 
         this.handleUserInputChange = this.handleUserInputChange.bind( this );
-        this.fetchAvailableUsers = this.fetchAvailableUsers.bind( this );
         this.handleSelectUser = this.handleSelectUser.bind( this );
         this.setInputValue = this.setInputValue.bind( this );
         this.showUsers = this.showUsers.bind( this );
@@ -38,23 +40,6 @@ export default class extends React.Component {
 
         if( event.target.value )
             this.fetchAvailableUsers(event.target.value)
-    }
-
-    fetchAvailableUsers(search_string) {
-        fetch('/api/v1/search-users', {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: JSON.stringify({search_string: search_string})
-        }).then( response => {
-            if (response.status >= 400) {
-                throw true;
-            }
-            else {
-                response.json().then(data => {
-                    this.setState({users: data});
-                });
-            }
-        }).catch( error => console.log(error) )
     }
 
     showUsers(event) {
@@ -102,3 +87,26 @@ export default class extends React.Component {
         )
     }
 }
+
+/**
+* ************************************ *
+**/
+
+const mapStateToProps = state => {
+    return {
+        fetching: state.usersState.fetching_members,
+        users: state.usersState.members,
+        current_user: state.usersState.current_user
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators({ ...usersActions }, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)( InviteMembersComponent )

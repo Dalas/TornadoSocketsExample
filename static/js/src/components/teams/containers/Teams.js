@@ -8,7 +8,7 @@ import TeamsListComponent from '../components/TeamsListComponent';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as teamsActions from '../actions/TeamsActions';
-import * as usersActions from '../actions/UsersAcions';
+import * as usersActions from '../actions/UsersActions';
 import * as teamActions from '../actions/TeamActions';
 
 
@@ -46,7 +46,7 @@ class TeamsComponent extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        fetching: state.teamsState.fetching && state.usersState.fetching,
+        fetching: state.teamsState.fetching || state.usersState.fetching || state.teamState.fetching,
         teams: state.teamsState.teams,
         current_user: state.usersState.current_user
     }
