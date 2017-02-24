@@ -25,7 +25,7 @@ export default function (state=initialState, action) {
             return { ...state, fetching: false, current_user: action.current_user };
 
         case FINISH_FETCHING_CURRENT_USER_WITH_ERROR:
-            return { ...state, fetching: false, error: 'Something went wrong!' };
+            return { ...state, fetching: false, error: action.error };
 
         case START_SEARCHING_MEMBERS:
             return { ...state, fetching_members: true, error: '', current_member: {} };
@@ -34,7 +34,7 @@ export default function (state=initialState, action) {
             return { ...state, fetching_members: false, members: action.members };
 
         case FINISH_SEARCHING_MEMBERS_WITH_ERROR:
-            return { ...state, fetching_members: false, error: 'Something went wrong!' };
+            return { ...state, fetching_members: false, error: action.error };
 
         case SELECT_MEMBER:
             return { ...state, current_member: action.member };
@@ -46,7 +46,7 @@ export default function (state=initialState, action) {
             return { ...state, fetching_members: false };
 
         case FINISH_INVITE_MEMBER_WITH_ERROR:
-            return { ...state, fetching_members: false };
+            return { ...state, fetching_members: false, error: action.error, current_member: {}, members: [] };
 
         default:
             return { ...state }

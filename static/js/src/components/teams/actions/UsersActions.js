@@ -24,9 +24,10 @@ function finishFetchingCurrentUser(current_user) {
     }
 }
 
-function finishFetchingCurrentUserWithError() {
+function finishFetchingCurrentUserWithError(error) {
     return {
-        type: FINISH_FETCHING_CURRENT_USER_WITH_ERROR
+        type: FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
+        error: error
     }
 }
 
@@ -39,14 +40,14 @@ export function fetchCurrentUser() {
             credentials: 'same-origin'
         }).then( response => {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             }
             else {
                 response.json().then(data => {
                     dispatch( finishFetchingCurrentUser(data) )
                 });
             }
-        }).catch( error => dispatch( finishFetchingCurrentUserWithError() ) )
+        }).catch( error => dispatch( finishFetchingCurrentUserWithError(error) ) )
     }
 }
 
@@ -67,9 +68,10 @@ function finishSearchingMembers(members) {
     }
 }
 
-function finishSearchingMembersWithError() {
+function finishSearchingMembersWithError(error) {
     return {
-        type: FINISH_SEARCHING_MEMBERS_WITH_ERROR
+        type: FINISH_SEARCHING_MEMBERS_WITH_ERROR,
+        error: error
     }
 }
 
@@ -83,14 +85,14 @@ export function searchMembers(search_string) {
             body: JSON.stringify({search_string: search_string})
         }).then( response => {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             }
             else {
                 response.json().then(data => {
                     dispatch( finishSearchingMembers(data) )
                 });
             }
-        }).catch( error => dispatch( finishSearchingMembersWithError() ))
+        }).catch( error => dispatch( finishSearchingMembersWithError(error) ))
     }
 }
 
@@ -122,9 +124,10 @@ function finishInviteMember(team) {
     }
 }
 
-function finishInviteMemberWithError() {
+function finishInviteMemberWithError(error) {
     return {
-        type: FINISH_INVITE_MEMBER_WITH_ERROR
+        type: FINISH_INVITE_MEMBER_WITH_ERROR,
+        error: error
     }
 }
 
@@ -138,13 +141,13 @@ export function inviteMember(member, team) {
             body: JSON.stringify({member: member, team: team})
         }).then( response => {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             }
             else {
                 response.json().then( data => {
                     dispatch( finishInviteMember(data) )
                 });
             }
-        }).catch( error => dispatch( finishInviteMemberWithError() ))
+        }).catch( error => dispatch( finishInviteMemberWithError(error) ))
     }
 }

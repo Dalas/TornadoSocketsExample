@@ -54,6 +54,18 @@ class Teams:
         return team
 
     @staticmethod
+    @coroutine
+    def check_member(team, member):
+        team = yield db.Teams.find_one({
+            '$and': [
+                {"_id": ObjectId(team['_id']), },
+                {"members._id": ObjectId(member['_id'])}
+            ]
+        })
+
+        return team
+
+    @staticmethod
     def serialize(team):
         team["_id"] = str(team["_id"])
         for member in team['members']:

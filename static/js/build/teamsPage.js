@@ -905,7 +905,7 @@ exports.default = function () {
             return _extends({}, state, { fetching: false, current_user: action.current_user });
 
         case _ActionTypes.FINISH_FETCHING_CURRENT_USER_WITH_ERROR:
-            return _extends({}, state, { fetching: false, error: 'Something went wrong!' });
+            return _extends({}, state, { fetching: false, error: action.error });
 
         case _ActionTypes.START_SEARCHING_MEMBERS:
             return _extends({}, state, { fetching_members: true, error: '', current_member: {} });
@@ -914,7 +914,7 @@ exports.default = function () {
             return _extends({}, state, { fetching_members: false, members: action.members });
 
         case _ActionTypes.FINISH_SEARCHING_MEMBERS_WITH_ERROR:
-            return _extends({}, state, { fetching_members: false, error: 'Something went wrong!' });
+            return _extends({}, state, { fetching_members: false, error: action.error });
 
         case _ActionTypes.SELECT_MEMBER:
             return _extends({}, state, { current_member: action.member });
@@ -926,7 +926,7 @@ exports.default = function () {
             return _extends({}, state, { fetching_members: false });
 
         case _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR:
-            return _extends({}, state, { fetching_members: false });
+            return _extends({}, state, { fetching_members: false, error: action.error, current_member: {}, members: [] });
 
         default:
             return _extends({}, state);
@@ -1296,6 +1296,10 @@ var _EditableTeam = __webpack_require__(114);
 
 var _EditableTeam2 = _interopRequireDefault(_EditableTeam);
 
+var _Error = __webpack_require__(265);
+
+var _Error2 = _interopRequireDefault(_Error);
+
 var _loader = __webpack_require__(65);
 
 var _loader2 = _interopRequireDefault(_loader);
@@ -1331,6 +1335,7 @@ var TeamsPage = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'col-sm-12' },
+                    _react2.default.createElement(_Error2.default, null),
                     _react2.default.createElement(_loader2.default, { display: this.props.fetching }),
                     _react2.default.createElement(
                         'div',
@@ -1351,6 +1356,81 @@ var TeamsPage = function (_React$Component) {
 }(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(TeamsPage, null), document.getElementById('container'));
+
+/***/ }),
+
+/***/ 265:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(10);
+
+var _redux = __webpack_require__(12);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by yura on 24.02.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var ErrorComponent = function (_React$Component) {
+    _inherits(ErrorComponent, _React$Component);
+
+    function ErrorComponent(props) {
+        _classCallCheck(this, ErrorComponent);
+
+        return _possibleConstructorReturn(this, (ErrorComponent.__proto__ || Object.getPrototypeOf(ErrorComponent)).call(this, props));
+    }
+
+    _createClass(ErrorComponent, [{
+        key: 'render',
+        value: function render() {
+            console.log(this.props);
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'col-sm-12 errors-container' },
+                this.props.errors.map(function (error, index) {
+                    return _react2.default.createElement(
+                        'p',
+                        { key: index },
+                        error
+                    );
+                })
+            );
+        }
+    }]);
+
+    return ErrorComponent;
+}(_react2.default.Component);
+
+/**
+* ************************************ *
+**/
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        errors: [state.teamsState.error, state.teamState.error, state.usersState.error]
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, {})(ErrorComponent);
 
 /***/ }),
 
@@ -1397,9 +1477,10 @@ function finishFetchingCurrentUser(current_user) {
     };
 }
 
-function finishFetchingCurrentUserWithError() {
+function finishFetchingCurrentUserWithError(error) {
     return {
-        type: _ActionTypes.FINISH_FETCHING_CURRENT_USER_WITH_ERROR
+        type: _ActionTypes.FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
+        error: error
     };
 }
 
@@ -1412,14 +1493,14 @@ function fetchCurrentUser() {
             credentials: 'same-origin'
         }).then(function (response) {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             } else {
                 response.json().then(function (data) {
                     dispatch(finishFetchingCurrentUser(data));
                 });
             }
         }).catch(function (error) {
-            return dispatch(finishFetchingCurrentUserWithError());
+            return dispatch(finishFetchingCurrentUserWithError(error));
         });
     };
 }
@@ -1441,9 +1522,10 @@ function finishSearchingMembers(members) {
     };
 }
 
-function finishSearchingMembersWithError() {
+function finishSearchingMembersWithError(error) {
     return {
-        type: _ActionTypes.FINISH_SEARCHING_MEMBERS_WITH_ERROR
+        type: _ActionTypes.FINISH_SEARCHING_MEMBERS_WITH_ERROR,
+        error: error
     };
 }
 
@@ -1457,14 +1539,14 @@ function searchMembers(search_string) {
             body: JSON.stringify({ search_string: search_string })
         }).then(function (response) {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             } else {
                 response.json().then(function (data) {
                     dispatch(finishSearchingMembers(data));
                 });
             }
         }).catch(function (error) {
-            return dispatch(finishSearchingMembersWithError());
+            return dispatch(finishSearchingMembersWithError(error));
         });
     };
 }
@@ -1497,9 +1579,10 @@ function finishInviteMember(team) {
     };
 }
 
-function finishInviteMemberWithError() {
+function finishInviteMemberWithError(error) {
     return {
-        type: _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR
+        type: _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR,
+        error: error
     };
 }
 
@@ -1513,14 +1596,14 @@ function inviteMember(member, team) {
             body: JSON.stringify({ member: member, team: team })
         }).then(function (response) {
             if (response.status >= 400) {
-                throw true;
+                throw response.statusText;
             } else {
                 response.json().then(function (data) {
                     dispatch(finishInviteMember(data));
                 });
             }
         }).catch(function (error) {
-            return dispatch(finishInviteMemberWithError());
+            return dispatch(finishInviteMemberWithError(error));
         });
     };
 }

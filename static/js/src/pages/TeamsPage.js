@@ -9,6 +9,7 @@ import store from '../components/teams/store/store';
 import TeamsComponent from '../components/teams/containers/Teams';
 //import TeamComponent from '../components/teams/containers/TeamComponent';
 import EditableTeamComponent from '../components/teams/containers/EditableTeam';
+import Error from '../components/teams/containers/Error';
 import Loader from '../components/loader';
 
 
@@ -21,6 +22,7 @@ class TeamsPage extends React.Component {
         return (
             <Provider store={ store }>
                 <div className="col-sm-12">
+                    <Error />
                     <Loader display={ this.props.fetching } />
                     <div className="col-sm-3">
                         <TeamsComponent />

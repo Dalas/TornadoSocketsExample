@@ -13,6 +13,10 @@ class InvitesApi(RequestHandler):
     def post(self):
         data = loads(self.request.body.decode('utf-8'))
 
-        team = yield Teams.invite_member(data['team'], data['member'])
+        team = yield Teams.check_member(data['team'], data['member'])
 
-        self.write(dumps(team))
+        if not team:
+            team = yield Teams.invite_member(data['team'], data['member'])
+            self.write(dumps(team))
+        else:
+            self.set_status(400, "You can add user to team only one time!")

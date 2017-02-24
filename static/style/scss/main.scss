@@ -66,6 +66,11 @@ body {
   }
 }
 
+.errors-container {
+  min-height: 0;
+  transition: min-height 500ms ease-out 0.5s;
+}
+
 
 /*.flex-center {
   display: flex;
