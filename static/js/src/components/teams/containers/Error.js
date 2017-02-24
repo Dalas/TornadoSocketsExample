@@ -12,8 +12,6 @@ class ErrorComponent extends React.Component {
     }
 
     render() {
-        console.log(this.props)
-
         return (
             <div className="col-sm-12 errors-container">
                 { this.props.errors.map( (error, index) => {

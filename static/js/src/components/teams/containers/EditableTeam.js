@@ -6,6 +6,7 @@ import React from 'react';
 import InviteUserComponent from './InviteUser';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import UsersActions from './Actions';
 import * as usersActions from '../actions/UsersActions';
 import * as teamActions from '../actions/TeamActions';
 
@@ -23,7 +24,8 @@ class TeamComponent extends React.Component {
         }
         else {
             component = <div>
-                <h3>Information:</h3>
+                <UsersActions />
+                <h3 className="col-sm-12 row">Information:</h3>
                 <table className="table">
                     <tbody>
                         <tr>

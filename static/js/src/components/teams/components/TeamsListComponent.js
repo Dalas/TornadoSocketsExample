@@ -17,7 +17,7 @@ export default ({ clickHandler, team, currentUserId }) => {
     return (
         <li onClick={ clickHandler } className="list-group-item">
             { team.title }
-            { team.owner == currentUserId ? <span className="label label-success my-label">{ getMyStatus() }</span> : '' }
+            <span className="label label-success my-label">{ getMyStatus() }</span>
         </li>
     )
 }

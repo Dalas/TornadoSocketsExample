@@ -81,6 +81,10 @@ var _reactRedux = __webpack_require__(10);
 
 var _redux = __webpack_require__(12);
 
+var _Actions = __webpack_require__(266);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
 var _UsersActions = __webpack_require__(40);
 
 var usersActions = _interopRequireWildcard(_UsersActions);
@@ -125,9 +129,10 @@ var TeamComponent = function (_React$Component) {
                 component = _react2.default.createElement(
                     'div',
                     null,
+                    _react2.default.createElement(_Actions2.default, null),
                     _react2.default.createElement(
                         'h3',
-                        null,
+                        { className: 'col-sm-12 row' },
                         'Information:'
                     ),
                     _react2.default.createElement(
@@ -585,11 +590,11 @@ exports.default = function (_ref) {
         "li",
         { onClick: clickHandler, className: "list-group-item" },
         team.title,
-        team.owner == currentUserId ? _react2.default.createElement(
+        _react2.default.createElement(
             "span",
             { className: "label label-success my-label" },
             getMyStatus()
-        ) : ''
+        )
     );
 }; /**
     * Created by yura on 22.02.17.
@@ -1401,8 +1406,6 @@ var ErrorComponent = function (_React$Component) {
     _createClass(ErrorComponent, [{
         key: 'render',
         value: function render() {
-            console.log(this.props);
-
             return _react2.default.createElement(
                 'div',
                 { className: 'col-sm-12 errors-container' },
@@ -1431,6 +1434,117 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, {})(ErrorComponent);
+
+/***/ }),
+
+/***/ 266:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(10);
+
+var _redux = __webpack_require__(12);
+
+var _UsersActions = __webpack_require__(40);
+
+var usersActions = _interopRequireWildcard(_UsersActions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by yura on 24.02.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var ActionsComponent = function (_React$Component) {
+    _inherits(ActionsComponent, _React$Component);
+
+    function ActionsComponent(props) {
+        _classCallCheck(this, ActionsComponent);
+
+        return _possibleConstructorReturn(this, (ActionsComponent.__proto__ || Object.getPrototypeOf(ActionsComponent)).call(this, props));
+    }
+
+    _createClass(ActionsComponent, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var actions = [];
+            var my_status_status = {};
+
+            this.props.team.members.find(function (member, array, index) {
+                if (member._id == _this2.props.current_user._id) {
+                    my_status_status = member.status;
+                }
+            });
+
+            if (my_status_status == "INVITED") {
+                actions.push(_react2.default.createElement(
+                    'button',
+                    { key: 'accept', className: 'btn btn-success' },
+                    'Accept invite'
+                ), _react2.default.createElement(
+                    'button',
+                    { key: 'decline', className: 'btn btn-danger' },
+                    'Decline invite'
+                ));
+            } else if (my_status_status == "MEMBER") {
+                actions.push(_react2.default.createElement(
+                    'button',
+                    { key: 'leave', className: 'btn btn-danger' },
+                    'Leave team'
+                ));
+            }
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'col-sm-12 row' },
+                actions
+            );
+        }
+    }]);
+
+    return ActionsComponent;
+}(_react2.default.Component);
+
+/**
+* ************************************ *
+**/
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        team: state.teamState.current_team,
+        current_user: state.usersState.current_user
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        actions: (0, _redux.bindActionCreators)(_extends({}, usersActions), dispatch)
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ActionsComponent);
 
 /***/ }),
 

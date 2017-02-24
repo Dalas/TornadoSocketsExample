@@ -3,11 +3,9 @@
  */
 
 import React from 'react';
-import Loader from '../../loader';
-import TeamsListComponent from '../components/TeamsListComponent';
+import UsersActions from './Actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as teamsActions from '../actions/TeamsActions';
 import * as usersActions from '../actions/UsersActions';
 import * as teamActions from '../actions/TeamActions';
 
@@ -35,6 +33,7 @@ class TeamComponent extends React.Component {
         }
         else {
             component = <div>
+                <UsersActions />
                 <h3>Information:</h3>
                 <table className="table">
                     <tbody>
