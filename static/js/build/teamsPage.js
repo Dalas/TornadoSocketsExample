@@ -731,7 +731,9 @@ var InviteMembersComponent = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'button',
-                    { disabled: !this.props.current_member._id, className: 'btn btn-primary col-sm-3' },
+                    { disabled: !this.props.current_member._id, onClick: function onClick() {
+                            _this2.setInputValue('');_this2.props.actions.inviteMember(_this2.props.current_member, _this2.props.team);
+                        }, className: 'btn btn-primary col-sm-3' },
                     'Invite User'
                 )
             );
@@ -801,6 +803,14 @@ exports.default = function () {
 
         case _ActionTypes.FINISH_TEAM_CREATION_WITH_ERROR:
             return _extends({}, state, { fetching: false, error: 'Something went wrong!' });
+
+        case _ActionTypes.FINISH_INVITE_MEMBER:
+            var new_teams = state.teams;
+            new_teams.find(function (team, index, array) {
+                if (team._id == action.team._id) array[index] = action.team;
+            });
+
+            return _extends({}, state, { current_team: action.team, teams: new_teams });
 
         default:
             return _extends({}, state);
@@ -909,6 +919,15 @@ exports.default = function () {
         case _ActionTypes.SELECT_MEMBER:
             return _extends({}, state, { current_member: action.member });
 
+        case _ActionTypes.START_INVITE_MEMBER:
+            return _extends({}, state, { fetching_members: true, current_member: {} });
+
+        case _ActionTypes.FINISH_INVITE_MEMBER:
+            return _extends({}, state, { fetching_members: false });
+
+        case _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR:
+            return _extends({}, state, { fetching_members: false });
+
         default:
             return _extends({}, state);
     }
@@ -951,6 +970,10 @@ var FINISH_SEARCHING_MEMBERS = exports.FINISH_SEARCHING_MEMBERS = "FINISH_FETCHI
 var FINISH_SEARCHING_MEMBERS_WITH_ERROR = exports.FINISH_SEARCHING_MEMBERS_WITH_ERROR = "FINISH_FETCHING_MEMBERS_WITH_ERROR";
 
 var SELECT_MEMBER = exports.SELECT_MEMBER = "SELECT_MEMBER";
+
+var START_INVITE_MEMBER = exports.START_INVITE_MEMBER = "START_INVITE_MEMBER";
+var FINISH_INVITE_MEMBER = exports.FINISH_INVITE_MEMBER = "FINISH_INVITE_MEMBER";
+var FINISH_INVITE_MEMBER_WITH_ERROR = exports.FINISH_INVITE_MEMBER_WITH_ERROR = "FINISH_INVITE_MEMBER_WITH_ERROR";
 
 // Teams
 var START_FETCHING_TEAMS = exports.START_FETCHING_TEAMS = "START_FETCHING_TEAMS";
@@ -1343,6 +1366,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchCurrentUser = fetchCurrentUser;
 exports.searchMembers = searchMembers;
 exports.selectMember = selectMember;
+exports.inviteMember = inviteMember;
 
 var _ActionTypes = __webpack_require__(23);
 
@@ -1453,6 +1477,51 @@ function selectMember(member) {
     return {
         type: _ActionTypes.SELECT_MEMBER,
         member: member
+    };
+}
+
+/*
+* Inviting
+* */
+
+function startInviteMember() {
+    return {
+        type: _ActionTypes.START_INVITE_MEMBER
+    };
+}
+
+function finishInviteMember(team) {
+    return {
+        type: _ActionTypes.FINISH_INVITE_MEMBER,
+        team: team
+    };
+}
+
+function finishInviteMemberWithError() {
+    return {
+        type: _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR
+    };
+}
+
+function inviteMember(member, team) {
+    return function (dispatch) {
+        dispatch(startInviteMember());
+
+        (0, _isomorphicFetch2.default)('/api/v1/invites', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({ member: member, team: team })
+        }).then(function (response) {
+            if (response.status >= 400) {
+                throw true;
+            } else {
+                response.json().then(function (data) {
+                    dispatch(finishInviteMember(data));
+                });
+            }
+        }).catch(function (error) {
+            return dispatch(finishInviteMemberWithError());
+        });
     };
 }
 

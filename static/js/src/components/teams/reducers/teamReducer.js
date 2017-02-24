@@ -2,7 +2,8 @@
  * Created by yura on 23.02.17.
  */
 
-import {SELECT_TEAM, FINISH_FETCHING_TEAMS, START_TEAM_CREATION, FINISH_TEAM_CREATION, FINISH_TEAM_CREATION_WITH_ERROR} from '../actions/ActionTypes';
+import {SELECT_TEAM, FINISH_FETCHING_TEAMS, START_TEAM_CREATION, FINISH_TEAM_CREATION, FINISH_TEAM_CREATION_WITH_ERROR,
+        FINISH_INVITE_MEMBER} from '../actions/ActionTypes';
 
 
 const initialState = {
@@ -32,6 +33,15 @@ export default function ( state=initialState, action ) {
 
         case FINISH_TEAM_CREATION_WITH_ERROR:
             return { ...state, fetching: false, error: 'Something went wrong!' };
+
+        case FINISH_INVITE_MEMBER:
+            let new_teams = state.teams;
+            new_teams.find((team, index, array) => {
+                 if( team._id == action.team._id )
+                     array[index] = action.team;
+            });
+
+            return { ...state, current_team: action.team, teams: new_teams };
 
         default:
             return { ...state }

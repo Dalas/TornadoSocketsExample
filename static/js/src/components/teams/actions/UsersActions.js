@@ -4,7 +4,7 @@
 
 import {START_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
         START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR,
-        SELECT_MEMBER} from './ActionTypes';
+        SELECT_MEMBER, START_INVITE_MEMBER, FINISH_INVITE_MEMBER, FINISH_INVITE_MEMBER_WITH_ERROR} from './ActionTypes';
 import fetch from 'isomorphic-fetch';
 
 /*
@@ -102,5 +102,49 @@ export function selectMember(member) {
     return {
         type: SELECT_MEMBER,
         member: member
+    }
+}
+
+/*
+* Inviting
+* */
+
+function startInviteMember() {
+    return {
+        type: START_INVITE_MEMBER
+    }
+}
+
+function finishInviteMember(team) {
+    return {
+        type: FINISH_INVITE_MEMBER,
+        team: team
+    }
+}
+
+function finishInviteMemberWithError() {
+    return {
+        type: FINISH_INVITE_MEMBER_WITH_ERROR
+    }
+}
+
+export function inviteMember(member, team) {
+    return dispatch => {
+        dispatch( startInviteMember() );
+
+        fetch('/api/v1/invites', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({member: member, team: team})
+        }).then( response => {
+            if (response.status >= 400) {
+                throw true;
+            }
+            else {
+                response.json().then( data => {
+                    dispatch( finishInviteMember(data) )
+                });
+            }
+        }).catch( error => dispatch( finishInviteMemberWithError() ))
     }
 }

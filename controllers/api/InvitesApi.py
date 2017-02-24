@@ -13,4 +13,6 @@ class InvitesApi(RequestHandler):
     def post(self):
         data = loads(self.request.body.decode('utf-8'))
 
-        self.write('ASD')
+        team = yield Teams.invite_member(data['team'], data['member'])
+
+        self.write(dumps(team))

@@ -2,7 +2,8 @@
  * Created by yura on 23.02.17.
  */
 
-import { START_FETCHING_TEAMS, FINISH_FETCHING_TEAMS, FINISH_FETCHING_TEAMS_WITH_ERROR, FINISH_TEAM_CREATION } from '../actions/ActionTypes';
+import { START_FETCHING_TEAMS, FINISH_FETCHING_TEAMS, FINISH_FETCHING_TEAMS_WITH_ERROR, FINISH_TEAM_CREATION,
+         FINISH_INVITE_MEMBER} from '../actions/ActionTypes';
 
 
 const initialState = {

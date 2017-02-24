@@ -4,7 +4,7 @@
 
 import {START_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
         START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR,
-        SELECT_MEMBER} from '../actions/ActionTypes';
+        SELECT_MEMBER, START_INVITE_MEMBER, FINISH_INVITE_MEMBER, FINISH_INVITE_MEMBER_WITH_ERROR} from '../actions/ActionTypes';
 
 
 const initialState = {
@@ -38,6 +38,15 @@ export default function (state=initialState, action) {
 
         case SELECT_MEMBER:
             return { ...state, current_member: action.member };
+
+        case START_INVITE_MEMBER:
+            return { ...state, fetching_members: true, current_member: {} };
+
+        case FINISH_INVITE_MEMBER:
+            return { ...state, fetching_members: false };
+
+        case FINISH_INVITE_MEMBER_WITH_ERROR:
+            return { ...state, fetching_members: false };
 
         default:
             return { ...state }

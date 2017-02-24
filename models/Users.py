@@ -24,7 +24,7 @@ class Users:
     @coroutine
     def find(query):
         result = []
-        cursor = db.Users.find(query)
+        cursor = db.Users.find(query, {"password": 0})
 
         while (yield cursor.fetch_next):
             user = cursor.next_object()
@@ -60,7 +60,7 @@ class Users:
     @coroutine
     def get_users(count, offset, currentUserId):
         result = []
-        cursor = db.Users.find({'_id': {'$ne': ObjectId(currentUserId)}}).limit(count)
+        cursor = db.Users.find({'_id': {'$ne': ObjectId(currentUserId)}}, {"password": 0}).limit(count)
         while (yield cursor.fetch_next):
             user = cursor.next_object()
             user['_id'] = str(user['_id'])
@@ -77,7 +77,7 @@ class Users:
         for identifier in users_ids:
             ids.append(ObjectId(identifier))
 
-        cursor = db.Users.find({'_id': {'$in': ids}})
+        cursor = db.Users.find({'_id': {'$in': ids}}, {"password": 0})
 
         while (yield cursor.fetch_next):
             user = cursor.next_object()

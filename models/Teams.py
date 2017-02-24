@@ -33,6 +33,27 @@ class Teams:
         return result
 
     @staticmethod
+    @coroutine
+    def invite_member(team, member):
+        new_member = {
+            "status": "INVITED",
+            "_id": ObjectId(member["_id"]),
+            "username": member["username"],
+            "email": member["email"]
+        }
+
+        yield db.Teams.update({"_id": ObjectId(team["_id"])}, {
+            "$addToSet": {
+                "members": new_member
+            }
+        })
+
+        new_member['_id'] = str(new_member['_id'])
+        team['members'].append(new_member)
+
+        return team
+
+    @staticmethod
     def serialize(team):
         team["_id"] = str(team["_id"])
         for member in team['members']:

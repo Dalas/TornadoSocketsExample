@@ -74,7 +74,7 @@ class InviteMembersComponent extends React.Component {
                         })}
                     </ul>
                 </div>
-                <button disabled={ !this.props.current_member._id } className="btn btn-primary col-sm-3">Invite User</button>
+                <button disabled={ !this.props.current_member._id } onClick={ () => { this.setInputValue(''); this.props.actions.inviteMember( this.props.current_member, this.props.team ) } } className="btn btn-primary col-sm-3">Invite User</button>
             </div>
         )
     }
