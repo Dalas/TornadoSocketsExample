@@ -58,8 +58,20 @@ class Teams:
     def check_member(team, member):
         team = yield db.Teams.find_one({
             '$and': [
-                {"_id": ObjectId(team['_id']), },
+                {"_id": ObjectId(team['_id'])},
                 {"members._id": ObjectId(member['_id'])}
+            ]
+        })
+
+        return team
+
+    @staticmethod
+    @coroutine
+    def check_owner(team, current_user):
+        team = yield db.Teams.find_one({
+            '$and': [
+                {"_id": ObjectId(team['_id'])},
+                {"owner": current_user['_id']}
             ]
         })
 

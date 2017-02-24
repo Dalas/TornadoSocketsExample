@@ -933,6 +933,24 @@ exports.default = function () {
         case _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR:
             return _extends({}, state, { fetching_members: false, error: action.error, current_member: {}, members: [] });
 
+        case _ActionTypes.START_ACCEPT_INVITE:
+            return _extends({}, state, { fetching_accept_invite: true });
+
+        case _ActionTypes.FINISH_ACCEPT_INVITE:
+            return _extends({}, state, { fetching_accept_invite: false });
+
+        case _ActionTypes.FINISH_ACCEPT_INVITE_WITH_ERROR:
+            return _extends({}, state, { fetching_accept_invite: false, error: action.error });
+
+        case _ActionTypes.START_DECLINE_INVITE:
+            return _extends({}, state, { fetching_accept_invite: true });
+
+        case _ActionTypes.FINISH_DECLINE_INVITE:
+            return _extends({}, state, { fetching_accept_invite: false });
+
+        case _ActionTypes.FINISH_DECLINE_INVITE_WITH_ERROR:
+            return _extends({}, state, { fetching_accept_invite: false, error: action.error });
+
         default:
             return _extends({}, state);
     }
@@ -979,6 +997,15 @@ var SELECT_MEMBER = exports.SELECT_MEMBER = "SELECT_MEMBER";
 var START_INVITE_MEMBER = exports.START_INVITE_MEMBER = "START_INVITE_MEMBER";
 var FINISH_INVITE_MEMBER = exports.FINISH_INVITE_MEMBER = "FINISH_INVITE_MEMBER";
 var FINISH_INVITE_MEMBER_WITH_ERROR = exports.FINISH_INVITE_MEMBER_WITH_ERROR = "FINISH_INVITE_MEMBER_WITH_ERROR";
+
+// Invites
+var START_ACCEPT_INVITE = exports.START_ACCEPT_INVITE = "START_ACCEPT_INVITE";
+var FINISH_ACCEPT_INVITE = exports.FINISH_ACCEPT_INVITE = "FINISH_ACCEPT_INVITE";
+var FINISH_ACCEPT_INVITE_WITH_ERROR = exports.FINISH_ACCEPT_INVITE_WITH_ERROR = "FINISH_ACCEPT_INVITE_WITH_ERROR";
+
+var START_DECLINE_INVITE = exports.START_DECLINE_INVITE = "START_DECLINE_INVITE";
+var FINISH_DECLINE_INVITE = exports.FINISH_DECLINE_INVITE = "FINISH_DECLINE_INVITE";
+var FINISH_DECLINE_INVITE_WITH_ERROR = exports.FINISH_DECLINE_INVITE_WITH_ERROR = "FINISH_DECLINE_INVITE_WITH_ERROR";
 
 // Teams
 var START_FETCHING_TEAMS = exports.START_FETCHING_TEAMS = "START_FETCHING_TEAMS";
@@ -1447,8 +1474,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(4);
@@ -1460,10 +1485,6 @@ var _reactRedux = __webpack_require__(10);
 var _redux = __webpack_require__(12);
 
 var _UsersActions = __webpack_require__(40);
-
-var usersActions = _interopRequireWildcard(_UsersActions);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1501,11 +1522,15 @@ var ActionsComponent = function (_React$Component) {
             if (my_status_status == "INVITED") {
                 actions.push(_react2.default.createElement(
                     'button',
-                    { key: 'accept', className: 'btn btn-success' },
+                    { onClick: function onClick() {
+                            return _this2.props.actions.acceptInvite(_this2.props.member, _this2.props.team);
+                        }, key: 'accept', className: 'btn btn-success' },
                     'Accept invite'
                 ), _react2.default.createElement(
                     'button',
-                    { key: 'decline', className: 'btn btn-danger' },
+                    { onClick: function onClick() {
+                            return _this2.props.actions.declineInvite(_this2.props.member, _this2.props.team);
+                        }, key: 'decline', className: 'btn btn-danger' },
                     'Decline invite'
                 ));
             } else if (my_status_status == "MEMBER") {
@@ -1540,7 +1565,10 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        actions: (0, _redux.bindActionCreators)(_extends({}, usersActions), dispatch)
+        actions: (0, _redux.bindActionCreators)({
+            acceptInvite: _UsersActions.acceptInvite,
+            declineInvite: _UsersActions.declineInvite
+        }, dispatch)
     };
 };
 
@@ -1561,6 +1589,8 @@ exports.fetchCurrentUser = fetchCurrentUser;
 exports.searchMembers = searchMembers;
 exports.selectMember = selectMember;
 exports.inviteMember = inviteMember;
+exports.acceptInvite = acceptInvite;
+exports.declineInvite = declineInvite;
 
 var _ActionTypes = __webpack_require__(23);
 
@@ -1706,6 +1736,98 @@ function inviteMember(member, team) {
 
         (0, _isomorphicFetch2.default)('/api/v1/invites', {
             method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({ member: member, team: team })
+        }).then(function (response) {
+            if (response.status >= 400) {
+                throw response.statusText;
+            } else {
+                response.json().then(function (data) {
+                    dispatch(finishInviteMember(data));
+                });
+            }
+        }).catch(function (error) {
+            return dispatch(finishInviteMemberWithError(error));
+        });
+    };
+}
+
+/*
+* Invite accept
+* */
+
+function startAcceptingInvite() {
+    return {
+        type: _ActionTypes.START_ACCEPT_INVITE
+    };
+}
+
+function finishAcceptingInvite(team) {
+    return {
+        type: _ActionTypes.FINISH_ACCEPT_INVITE,
+        team: team
+    };
+}
+
+function finishAcceptingInviteWithError(error) {
+    return {
+        type: _ActionTypes.FINISH_ACCEPT_INVITE_WITH_ERROR,
+        error: error
+    };
+}
+
+function acceptInvite(member, team) {
+    return function (dispatch) {
+        dispatch(startInviteMember());
+
+        (0, _isomorphicFetch2.default)('/api/v1/invites', {
+            method: 'PUT',
+            credentials: 'same-origin',
+            body: JSON.stringify({ member: member, team: team })
+        }).then(function (response) {
+            if (response.status >= 400) {
+                throw response.statusText;
+            } else {
+                response.json().then(function (data) {
+                    dispatch(finishInviteMember(data));
+                });
+            }
+        }).catch(function (error) {
+            return dispatch(finishInviteMemberWithError(error));
+        });
+    };
+}
+
+/*
+* Invite decline
+* */
+
+function startDeclineInvite() {
+    return {
+        type: _ActionTypes.START_INVITE_MEMBER
+    };
+}
+
+function finishDeclineInvite(team) {
+    return {
+        type: _ActionTypes.FINISH_INVITE_MEMBER,
+        team: team
+    };
+}
+
+function finishDeclineInviteWithError(error) {
+    return {
+        type: _ActionTypes.FINISH_INVITE_MEMBER_WITH_ERROR,
+        error: error
+    };
+}
+
+function declineInvite(member, team) {
+    return function (dispatch) {
+        dispatch(startInviteMember());
+
+        (0, _isomorphicFetch2.default)('/api/v1/invites', {
+            method: 'DELETE',
             credentials: 'same-origin',
             body: JSON.stringify({ member: member, team: team })
         }).then(function (response) {

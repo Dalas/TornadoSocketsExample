@@ -4,7 +4,9 @@
 
 import {START_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
         START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR,
-        SELECT_MEMBER, START_INVITE_MEMBER, FINISH_INVITE_MEMBER, FINISH_INVITE_MEMBER_WITH_ERROR} from '../actions/ActionTypes';
+        SELECT_MEMBER, START_INVITE_MEMBER, FINISH_INVITE_MEMBER, FINISH_INVITE_MEMBER_WITH_ERROR,
+        START_ACCEPT_INVITE, FINISH_ACCEPT_INVITE, FINISH_ACCEPT_INVITE_WITH_ERROR,
+        START_DECLINE_INVITE, FINISH_DECLINE_INVITE, FINISH_DECLINE_INVITE_WITH_ERROR} from '../actions/ActionTypes';
 
 
 const initialState = {
@@ -47,6 +49,24 @@ export default function (state=initialState, action) {
 
         case FINISH_INVITE_MEMBER_WITH_ERROR:
             return { ...state, fetching_members: false, error: action.error, current_member: {}, members: [] };
+
+        case START_ACCEPT_INVITE:
+            return { ...state, fetching_accept_invite: true};
+
+        case FINISH_ACCEPT_INVITE:
+            return { ...state, fetching_accept_invite: false };
+
+        case FINISH_ACCEPT_INVITE_WITH_ERROR:
+            return { ...state, fetching_accept_invite: false, error: action.error };
+
+        case START_DECLINE_INVITE:
+            return { ...state, fetching_accept_invite: true};
+
+        case FINISH_DECLINE_INVITE:
+            return { ...state, fetching_accept_invite: false };
+
+        case FINISH_DECLINE_INVITE_WITH_ERROR:
+            return { ...state, fetching_accept_invite: false, error: action.error };
 
         default:
             return { ...state }

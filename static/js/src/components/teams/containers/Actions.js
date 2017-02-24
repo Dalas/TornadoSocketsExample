@@ -5,7 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as usersActions from '../actions/UsersActions';
+import { acceptInvite, declineInvite } from '../actions/UsersActions';
 
 
 class ActionsComponent extends React.Component {
@@ -25,8 +25,8 @@ class ActionsComponent extends React.Component {
 
         if( my_status_status == "INVITED" ) {
             actions.push(
-                <button key="accept" className="btn btn-success">Accept invite</button>,
-                <button key="decline" className="btn btn-danger">Decline invite</button>
+                <button onClick={ () => this.props.actions.acceptInvite( this.props.member, this.props.team ) } key="accept" className="btn btn-success">Accept invite</button>,
+                <button onClick={ () => this.props.actions.declineInvite( this.props.member, this.props.team ) } key="decline" className="btn btn-danger">Decline invite</button>
             )
         } else if ( my_status_status == "MEMBER" ) {
             actions.push(
@@ -54,7 +54,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({ ...usersActions }, dispatch)
+        actions: bindActionCreators({
+            acceptInvite: acceptInvite,
+            declineInvite: declineInvite
+        }, dispatch)
     }
 };
 
