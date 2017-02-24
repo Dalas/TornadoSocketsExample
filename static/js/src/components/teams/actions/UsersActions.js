@@ -3,7 +3,8 @@
  */
 
 import {START_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER, FINISH_FETCHING_CURRENT_USER_WITH_ERROR,
-        START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR} from './ActionTypes';
+        START_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS, FINISH_SEARCHING_MEMBERS_WITH_ERROR,
+        SELECT_MEMBER} from './ActionTypes';
 import fetch from 'isomorphic-fetch';
 
 /*
@@ -86,9 +87,20 @@ export function searchMembers(search_string) {
             }
             else {
                 response.json().then(data => {
-                    finishSearchingMembers(data)
+                    dispatch( finishSearchingMembers(data) )
                 });
             }
         }).catch( error => dispatch( finishSearchingMembersWithError() ))
+    }
+}
+
+/*
+* Selecting available member
+* */
+
+export function selectMember(member) {
+    return {
+        type: SELECT_MEMBER,
+        member: member
     }
 }

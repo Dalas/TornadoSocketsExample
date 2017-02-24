@@ -21,25 +21,17 @@ class InviteMembersComponent extends React.Component {
         this.hideUsers = this.hideUsers.bind( this );
 
         this.state = {
-            username: '',
-            show: false,
-            users: [],
-            selected_user: ''
+            search_string: ''
         };
 
         document.addEventListener("click", this.hideUsers)
     }
 
     handleUserInputChange( event ) {
-        this.setState({
-            username: event.target.value,
-            selected_user: ''
-        });
-
         this.setInputValue( event.target.value );
 
         if( event.target.value )
-            this.fetchAvailableUsers(event.target.value)
+            this.props.actions.searchMembers(event.target.value)
     }
 
     showUsers(event) {
@@ -56,12 +48,12 @@ class InviteMembersComponent extends React.Component {
         })
     }
 
-    handleSelectUser(event, user) {
+    handleSelectUser(user) {
         this.setState({
-            selected_user: user._id,
-            username: user.username
+            search_string: user.username
         });
 
+        this.props.actions.selectMember( user );
         this.setInputValue(user.username)
     }
 
@@ -73,16 +65,16 @@ class InviteMembersComponent extends React.Component {
         return (
             <div className="form-group row">
                 <div className="col-sm-8">
-                    <Debounce time="500" handler="onChange">
+                    <Debounce time="250" handler="onChange">
                         <input ref="searchInput" onClick={ this.showUsers } className="form-control border-box" type="text" defaultValue={ this.state.username } onChange={ this.handleUserInputChange } />
                     </Debounce>
                     <ul className={`list-group users-preview-list ${ this.state.show ? "" : "hidden" }`}>
-                        { this.state.users.map( (user, index) => {
-                            return <li key={ index } onClick={ (event) => { this.handleSelectUser( event, user ) } } className="list-group-item">{ user.username }</li>
+                        { this.props.members.map( (user, index) => {
+                            return <li key={ index } onClick={ () => { this.handleSelectUser( user ) } } className="list-group-item">{ user.username }</li>
                         })}
                     </ul>
                 </div>
-                <button disabled={ !this.state.selected_user } className="btn btn-primary col-sm-3">Invite User</button>
+                <button disabled={ !this.props.current_member._id } className="btn btn-primary col-sm-3">Invite User</button>
             </div>
         )
     }
@@ -95,8 +87,10 @@ class InviteMembersComponent extends React.Component {
 const mapStateToProps = state => {
     return {
         fetching: state.usersState.fetching_members,
-        users: state.usersState.members,
-        current_user: state.usersState.current_user
+        members: state.usersState.members,
+        current_user: state.usersState.current_user,
+        current_member: state.usersState.current_member,
+        team: state.teamState.current_team
     }
 };
 

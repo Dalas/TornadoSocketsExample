@@ -27,7 +27,8 @@ class TeamsComponent extends React.Component {
                 <ul className="list-group teams-list">
                     <Loader display={ this.props.fetching } />
                     { this.props.teams.map( (team, index) => {
-                        return (<TeamsListComponent
+                        return (
+                            <TeamsListComponent
                                 clickHandler={ () => this.props.actions.selectTeam( index ) }
                                 key={ index }
                                 team={ team }

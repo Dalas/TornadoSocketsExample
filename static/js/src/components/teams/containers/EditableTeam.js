@@ -12,7 +12,6 @@ import * as teamActions from '../actions/TeamActions';
 
 class TeamComponent extends React.Component {
     constructor( props ) {
-        console.log(props);
         super( props );
     }
 
